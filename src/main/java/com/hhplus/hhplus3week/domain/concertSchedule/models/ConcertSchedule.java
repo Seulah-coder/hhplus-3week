@@ -22,6 +22,9 @@ public class ConcertSchedule {
     @Column(name = "CONCERT_ID")
     private Long concertId;
 
+    @Column(name = "CONCERT_PLACE")
+    private String concertPlace;
+
     @Column(name = "OPEN_DATE")
     private LocalDateTime openDate;
 
