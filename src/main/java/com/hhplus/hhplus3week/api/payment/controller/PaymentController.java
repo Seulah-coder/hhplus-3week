@@ -1,7 +1,6 @@
 package com.hhplus.hhplus3week.api.payment.controller;
 
 import com.hhplus.hhplus3week.api.payment.dto.PaymentDTO;
-import com.hhplus.hhplus3week.api.seat.dto.SeatDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,7 @@ public class PaymentController {
      * @return
      */
     @PostMapping("/")
-    public ResponseEntity<PaymentDTO> requestPayment(PaymentDTO paymentDTO){
+    public ResponseEntity<PaymentDTO> requestPayment(@RequestBody PaymentDTO paymentDTO){
         PaymentDTO payment = new PaymentDTO();
         return ResponseEntity.ok(payment);
     }

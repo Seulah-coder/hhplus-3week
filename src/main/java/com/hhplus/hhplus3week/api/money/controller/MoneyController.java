@@ -15,7 +15,7 @@ public class MoneyController {
      * @return
      */
     @PostMapping("/check")
-    public ResponseEntity<MoneyDTO> requestPayment(MoneyDTO moneyDTO){
+    public ResponseEntity<MoneyDTO> requestPayment(@RequestBody MoneyDTO moneyDTO){
         MoneyDTO money = new MoneyDTO();
         return ResponseEntity.ok(money);
     }

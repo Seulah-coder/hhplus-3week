@@ -1,7 +1,6 @@
 package com.hhplus.hhplus3week.api.booking.controller;
 
 import com.hhplus.hhplus3week.api.booking.dto.BookingDTO;
-import com.hhplus.hhplus3week.api.concert.dto.ConcertDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +29,7 @@ public class BookingController {
      * @return
      */
     @PostMapping("/request")
-    public ResponseEntity<BookingDTO> requestBooking(BookingDTO bookingDTO){
+    public ResponseEntity<BookingDTO> requestBooking(@RequestBody BookingDTO bookingDTO){
         return ResponseEntity.ok(bookingDTO);
     }
 
