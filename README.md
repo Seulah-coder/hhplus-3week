@@ -6,7 +6,10 @@
 
 >ERD 설계 자료
 
-![콘서트 예약 시스템 - erd](https://github.com/user-attachments/assets/c2f959ca-d01d-4935-b02b-f8f4f4900376)
+[피드백 이후 ERD 수정 : 2024-10-14]
+
+![erd수정 10월 14일](https://github.com/user-attachments/assets/dddf1f18-1993-4394-ab88-28a682945ae0)
+
 
 ```
 테이블 설명 : 
@@ -34,73 +37,69 @@ TB_BOOKING_HISTORY : 예약 관련 이력을 저장한다.
 >기본 패키지 구조
 
 ```
-├─api
-│  ├─booking
-│  │  ├─controller
-│  │  ├─dto
-│  │  └─usecase
-│  ├─concert
-│  │  ├─controller
-│  │  ├─dto
-│  │  └─usecase
-│  ├─concertSchedule
-│  │  ├─controller
-│  │  ├─dto
-│  │  └─usecase
-│  ├─money
-│  │  ├─controller
-│  │  ├─dto
-│  │  └─usecase
-│  ├─payment
-│  │  ├─controller
-│  │  ├─dto
-│  │  └─usecase
-│  ├─seat
-│  │  ├─controller
-│  │  ├─dto
-│  │  └─usecase
-│  ├─token
-│  │  ├─controller
-│  │  ├─dto
-│  │  └─usecase
-│  └─user
-│      ├─controller
-│      ├─dto
-│      └─usecase
-├─config
-└─domain
-    ├─booking
-    │  ├─models
-    │  ├─repositories
-    │  └─services
-    ├─concert
-    │  ├─models
-    │  ├─repositories
-    │  └─services
-    ├─concertSchedule
-    │  ├─models
-    │  ├─repositories
-    │  └─services
-    ├─money
-    │  ├─models
-    │  ├─repositories
-    │  └─services
-    ├─payment
-    │  ├─models
-    │  ├─repositories
-    │  └─services
-    ├─seat
-    │  ├─models
-    │  ├─repositories
-    │  └─services
-    ├─token
-    │  ├─models
-    │  ├─repositories
-    │  └─services
-    └─user
-        ├─models
-        ├─repositories
-        └─services
+└─com
+    └─hhplus
+        └─hhplus3week
+            ├─app
+            │  ├─api
+            │  │  ├─booking
+            │  │  │  ├─controller
+            │  │  │  └─dto
+            │  │  ├─concert
+            │  │  │  ├─controller
+            │  │  │  └─dto
+            │  │  ├─concertSchedule
+            │  │  │  ├─controller
+            │  │  │  └─dto
+            │  │  ├─money
+            │  │  │  ├─controller
+            │  │  │  └─dto
+            │  │  ├─payment
+            │  │  │  ├─controller
+            │  │  │  └─dto
+            │  │  ├─seat
+            │  │  │  ├─controller
+            │  │  │  └─dto
+            │  │  ├─token
+            │  │  │  ├─controller
+            │  │  │  └─dto
+            │  │  └─user
+            │  │      ├─controller
+            │  │      └─dto
+            │  └─domain
+            │      ├─booking
+            │      │  ├─models
+            │      │  ├─repositories
+            │      │  └─services
+            │      ├─concert
+            │      │  ├─models
+            │      │  ├─repositories
+            │      │  └─services
+            │      ├─concertSchedule
+            │      │  ├─models
+            │      │  ├─repositories
+            │      │  └─services
+            │      ├─money
+            │      │  ├─models
+            │      │  ├─repositories
+            │      │  └─services
+            │      ├─payment
+            │      │  ├─models
+            │      │  ├─repositories
+            │      │  └─services
+            │      ├─seat
+            │      │  ├─models
+            │      │  ├─repositories
+            │      │  └─services
+            │      ├─token
+            │      │  ├─models
+            │      │  ├─repositories
+            │      │  └─services
+            │      └─user
+            │          ├─models
+            │          ├─repositories
+            │          └─services
+            └─config
 ```
 
 패키지 구조를 구성한 이유 : 
@@ -117,6 +116,10 @@ TB_BOOKING_HISTORY : 예약 관련 이력을 저장한다.
 
 - 의존성 관리: 계층 간 의존성이 명확하게 구분되어 있어, 의존성 주입(Dependency Injection)과 같은 디자인 패턴을 적용하기 수월합니다. 이를 통해 코드의 결합도를 낮추고, 모듈화된 구조를 더욱 강화할 수 있습니다.
 
+[피드백 이후 패키지 구조 수정 : 2024-10-14]
+
+- 수정 사항 : usecase 비즈니스 로직을 처리하고, service도 비즈니스 로직을 수행하여 중복 계층이라 삭제. app/config로 가장 최상위 패키지 구분. 
+- 미 반영 사항 : 도메인 별로 분리 할 필요성이 있는지 고민. BookingDTO 네이밍 고민중..
 
 >기술 스택
 
