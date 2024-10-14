@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/concertSchedule")
+@RequestMapping("/api/concertSchedules")
 @Tag(name = "콘서트 스케줄 api")
 public class ConcertScheduleController {
 

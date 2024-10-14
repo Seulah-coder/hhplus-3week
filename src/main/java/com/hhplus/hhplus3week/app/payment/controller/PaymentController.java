@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/payment")
+@RequestMapping("/api/payments")
 @Tag(name = "결제 api")
 public class PaymentController {
 

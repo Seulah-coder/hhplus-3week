@@ -3,17 +3,20 @@ package com.hhplus.hhplus3week.app.token.controller;
 import com.hhplus.hhplus3week.app.token.dto.TokenDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Tag(name = "토큰 api")
-@RequestMapping("/api/token")
+@RequestMapping("/api/tokens")
 public class TokenController {
 
     @PostMapping("/request")
-    public ResponseEntity<TokenDTO> requestToken(TokenDTO tokenDTO){
+    public ResponseEntity<TokenDTO> requestIssueToken(TokenDTO tokenDTO){
         return ResponseEntity.ok(tokenDTO);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TokenDTO> getTokenById(@PathVariable("id") Long id){
+        return ResponseEntity.ok(new TokenDTO());
     }
 }

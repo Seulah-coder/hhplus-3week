@@ -5,11 +5,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
-@RequestMapping("/api/booking")
+@RequestMapping("/api/bookings")
 @Tag(name = "예약 api")
 public class BookingController {
 
@@ -20,25 +18,12 @@ public class BookingController {
         return ResponseEntity.ok(booking);
     }
 
-    /**
-     * 예약 신청
-     * @param bookingDTO
-     * @return
-     */
+
     @PostMapping("/")
     public ResponseEntity<BookingDTO> requestBooking(@RequestBody BookingDTO bookingDTO){
         return ResponseEntity.ok(bookingDTO);
     }
 
-    /**
-     * 예약 내역들 조회
-     * @return
-     */
-    @GetMapping("/bookings")
-    public ResponseEntity<List<BookingDTO>> getConcertById(@PathVariable("userId") Long userId){
-        List<BookingDTO> bookingList = new ArrayList<>();
-        return ResponseEntity.ok(bookingList);
-    }
 
 
 

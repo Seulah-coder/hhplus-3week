@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/concert")
+@RequestMapping("/api/concerts")
 @Tag(name = "콘서트 api")
 public class ConcertController {
 
@@ -19,7 +19,7 @@ public class ConcertController {
      * 콘서트 목록 조회
      * @return
      */
-    @GetMapping("/concerts")
+    @GetMapping("/")
     public ResponseEntity<List<ConcertDTO>> getAllConcertList(){
         List<ConcertDTO> concertList = List.of();
         return ResponseEntity.ok(concertList);
@@ -29,7 +29,7 @@ public class ConcertController {
      * 콘서트 조회
      * @return
      */
-    @GetMapping("/concerts/{concertId}")
+    @GetMapping("/{concertId}")
     public ResponseEntity<ConcertDTO> getConcertById(@PathVariable("concertId") Long concertId){
         ConcertDTO concert = new ConcertDTO();
         return ResponseEntity.ok(concert);
