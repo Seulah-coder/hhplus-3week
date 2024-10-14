@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "tb_user")
+@Table(name = "user")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,7 +16,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length=100)
     private String name;
 
+    @Column(length=30)
     private String mobile;
 }

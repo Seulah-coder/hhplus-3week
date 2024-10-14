@@ -19,7 +19,7 @@ public class SeatController {
      * 콘서트 스케줄 아이디에 따른 예약 가능한 좌석 수를 조회한다.
      * @return
      */
-    @GetMapping("/{concertScheduleId}")
+    @GetMapping("/seats/{concertScheduleId}")
     public ResponseEntity<List<SeatDTO>> getSeatListByScheduleId(@PathVariable("concertScheduleId") Long concertScheduleId){
         List<SeatDTO> seatList = List.of();
         return ResponseEntity.ok(seatList);

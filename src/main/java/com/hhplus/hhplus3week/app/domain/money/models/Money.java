@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "tb_money")
+@Table(name = "money")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,8 +15,8 @@ public class Money {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(length=30)
     private Long userId;
-
+    @Column(length=30)
     private int currentAmount;
 }

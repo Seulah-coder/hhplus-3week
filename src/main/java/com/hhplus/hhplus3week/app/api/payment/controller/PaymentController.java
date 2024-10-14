@@ -22,7 +22,7 @@ public class PaymentController {
     }
 
     /**
-     * 아이디에 따른 특정 콘서트 상세 정보를 조회한다.
+     * 아이디에 따른 결제 정보를 조회한다
      * @return
      */
     @GetMapping("/detail/{id}")

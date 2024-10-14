@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tb_payment")
+@Table(name = "payment")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,13 +17,13 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(length=30)
     private Long userId;
 
-    private Long bookingId;
-
+    @Column(length=30)
     private int amount;
 
+    @Column(length=100)
     private LocalDateTime paymentTime;
 
 

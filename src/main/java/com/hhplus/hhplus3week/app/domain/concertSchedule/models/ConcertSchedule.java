@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tb_concert_schedule")
+@Table(name = "concert_schedule")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,12 +17,12 @@ public class ConcertSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(length=30)
     private Long concertId;
-
+    @Column(length=100)
     private String concertPlace;
-
-    private LocalDateTime openDate;
-
+    @Column(length=100)
+    private LocalDateTime openDatetime;
+    @Column(length=100)
     private LocalDateTime ticketOpenDate;
 }
