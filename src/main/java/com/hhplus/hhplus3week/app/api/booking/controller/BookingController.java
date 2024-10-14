@@ -26,7 +26,7 @@ public class BookingController {
      * @param bookingDTO
      * @return
      */
-    @PostMapping("/request")
+    @PostMapping("/")
     public ResponseEntity<BookingDTO> requestBooking(@RequestBody BookingDTO bookingDTO){
         return ResponseEntity.ok(bookingDTO);
     }
@@ -35,7 +35,7 @@ public class BookingController {
      * 예약 내역들 조회
      * @return
      */
-    @GetMapping("/list/{userId}")
+    @GetMapping("/bookings")
     public ResponseEntity<List<BookingDTO>> getConcertById(@PathVariable("userId") Long userId){
         List<BookingDTO> bookingList = new ArrayList<>();
         return ResponseEntity.ok(bookingList);
