@@ -1,3 +1,4 @@
+
 package com.hhplus.hhplus3week.app.payment.models;
 
 import jakarta.persistence.*;

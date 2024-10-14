@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/token")
 public class TokenController {
 
-    @PostMapping("/save")
-    public ResponseEntity<TokenDTO> saveToken(TokenDTO tokenDTO){
+    @PostMapping("/request")
+    public ResponseEntity<TokenDTO> requestToken(TokenDTO tokenDTO){
         return ResponseEntity.ok(tokenDTO);
     }
 }

@@ -1,5 +1,9 @@
+
 package com.hhplus.hhplus3week.app.money.dto;
 
+import lombok.Data;
+
+@Data
 public class MoneyDTO {
 
     private Long id;

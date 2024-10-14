@@ -1,5 +1,8 @@
 package com.hhplus.hhplus3week.app.seat.dto;
 
+import lombok.Data;
+
+@Data
 public class SeatDTO {
 
     private Long id;

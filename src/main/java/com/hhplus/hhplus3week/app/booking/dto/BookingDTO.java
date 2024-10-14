@@ -1,7 +1,11 @@
 package com.hhplus.hhplus3week.app.booking.dto;
 
+
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
+@Data
 public class BookingDTO {
 
     private Long id;

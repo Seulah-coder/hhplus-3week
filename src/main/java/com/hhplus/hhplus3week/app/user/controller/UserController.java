@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/seat")
+@RequestMapping("/api/user")
 @Tag(name = "유저 api")
 public class UserController {
 

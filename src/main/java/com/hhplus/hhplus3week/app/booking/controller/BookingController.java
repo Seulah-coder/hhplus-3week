@@ -1,5 +1,4 @@
 package com.hhplus.hhplus3week.app.booking.controller;
-
 import com.hhplus.hhplus3week.app.booking.dto.BookingDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
