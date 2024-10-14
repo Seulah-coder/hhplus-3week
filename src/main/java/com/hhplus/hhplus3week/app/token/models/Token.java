@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "TB_TOKEN")
+@Table(name = "token")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,28 +16,27 @@ public class Token {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(length=30)
     private Long id;
 
-    @Column(name = "USER_ID")
+    @Column(length=30)
     private Long userId;
 
-    @Column(name = "TOKEN")
     private String token;
 
-    @Column(name = "TOKEN_STATUS")
+    @Column(length=30)
     private String tokenStatus;
 
-    @Column(name = "WAITING_INDEX")
+    @Column(length=30)
     private Long waitingIndex;
 
-    @Column(name = "CREATE_TIME")
+    @Column(length=100)
     private LocalDateTime createTime;
 
-    @Column(name = "UPDATE_TIME")
+    @Column(length=100)
     private LocalDateTime updateTime;
 
-    @Column(name = "EXPIRE_TIME")
+    @Column(length=100)
     private LocalDateTime expireTime;
 
 

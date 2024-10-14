@@ -1,5 +1,6 @@
 package com.hhplus.hhplus3week.app.payment.controller;
 
+
 import com.hhplus.hhplus3week.app.payment.dto.PaymentDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +17,13 @@ public class PaymentController {
      * @return
      */
     @PostMapping("/")
-    public ResponseEntity<PaymentDTO> requestPayment(PaymentDTO paymentDTO){
+    public ResponseEntity<PaymentDTO> requestPayment(@RequestBody PaymentDTO paymentDTO){
         PaymentDTO payment = new PaymentDTO();
         return ResponseEntity.ok(payment);
     }
 
     /**
-     * 아이디에 따른 특정 콘서트 상세 정보를 조회한다.
+     * 아이디에 따른 결제 정보를 조회한다
      * @return
      */
     @GetMapping("/detail/{id}")

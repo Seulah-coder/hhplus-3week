@@ -19,7 +19,7 @@ public class ConcertController {
      * 콘서트 목록 조회
      * @return
      */
-    @GetMapping("/list")
+    @GetMapping("/concerts")
     public ResponseEntity<List<ConcertDTO>> getAllConcertList(){
         List<ConcertDTO> concertList = List.of();
         return ResponseEntity.ok(concertList);
@@ -29,8 +29,8 @@ public class ConcertController {
      * 콘서트 조회
      * @return
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<ConcertDTO> getConcertById(@PathVariable("id") Long concertId){
+    @GetMapping("/concerts/{concertId}")
+    public ResponseEntity<ConcertDTO> getConcertById(@PathVariable("concertId") Long concertId){
         ConcertDTO concert = new ConcertDTO();
         return ResponseEntity.ok(concert);
     }

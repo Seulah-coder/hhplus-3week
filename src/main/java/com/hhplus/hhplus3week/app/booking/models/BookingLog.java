@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "TB_BOOKING_HISTORY")
+@Table(name = "booking_log")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,30 +16,29 @@ public class BookingLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
     private Long id;
 
-    @Column(name = "USER_ID")
+    @Column(length=30)
     private Long userId;
 
-    @Column(name = "SEAT_ID")
+    @Column(length=30)
     private Long seatId;
 
-    @Column(name = "BOOKING_TIME")
+    @Column(length=100)
     private LocalDateTime bookingTime;
 
-    @Column(name = "BOOKING_STATUS")
+    @Column(length=30)
     private String bookingStatus;
 
-    @Column(name = "CONCERT_NAME")
+    @Column(length=100)
     private String concertName;
 
-    @Column(name = "CONCERT_DATE")
+    @Column(length=100)
     private LocalDateTime concertDate;
 
-    @Column(name = "PRICE")
+    @Column(length=30)
     private int price;
 
-    @Column(name = "SEAT_NUMBER")
+    @Column(length=30)
     private Long seatNumber;
 }

@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "TB_SEAT")
+@Table(name = "seat")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,24 +14,19 @@ public class Seat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(length=30)
     private Long id;
 
-    @Column(name = "CONCERT_SCHEDULE_ID")
+    @Column(length=30)
     private Long concertScheduleId;
 
-    @Column(name = "SEAT_NUMBER")
+    @Column(length=30)
     private Long seatNumber;
 
-    @Column(name = "PRICE")
+    @Column(length=30)
     private int price;
 
-    @Column(name = "SEAT_STATUS")
+    @Column(length=30)
     private String seatStatus;
 
-    @Column(name = "TEMP_USER_ID")
-    private Long tempUserId;
-
-    @Column(name = "TEMP_EXPIRE_TIME")
-    private Long tempExpireTime;
 }

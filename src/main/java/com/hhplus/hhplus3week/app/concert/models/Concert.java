@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "TB_CONCERT")
+@Table(name = "concert")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,12 +14,10 @@ public class Concert {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
     private Long id;
 
-    @Column(name = "NAME")
+    @Column(length=100)
     private String name;
-
-    @Column(name = "SINGER")
+    @Column(length=100)
     private String singer;
 }

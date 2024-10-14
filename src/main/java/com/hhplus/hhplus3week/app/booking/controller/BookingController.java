@@ -1,6 +1,7 @@
 package com.hhplus.hhplus3week.app.booking.controller;
 
 import com.hhplus.hhplus3week.app.booking.dto.BookingDTO;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +14,7 @@ import java.util.List;
 @Tag(name = "예약 api")
 public class BookingController {
 
-    /**
-     * 아이디로 예약 내역을 가져온다
-     * @return
-     */
+    @Operation(summary="예약 내역 조회", description="id로 예약 내역을 가져온다")
     @GetMapping("/{id}")
     public ResponseEntity<BookingDTO> getBookingById(@PathVariable("id") Long id){
         BookingDTO booking = new BookingDTO();
@@ -28,8 +26,8 @@ public class BookingController {
      * @param bookingDTO
      * @return
      */
-    @PostMapping("/request")
-    public ResponseEntity<BookingDTO> requestBooking(BookingDTO bookingDTO){
+    @PostMapping("/")
+    public ResponseEntity<BookingDTO> requestBooking(@RequestBody BookingDTO bookingDTO){
         return ResponseEntity.ok(bookingDTO);
     }
 
@@ -37,7 +35,7 @@ public class BookingController {
      * 예약 내역들 조회
      * @return
      */
-    @GetMapping("/list/{userId}")
+    @GetMapping("/bookings")
     public ResponseEntity<List<BookingDTO>> getConcertById(@PathVariable("userId") Long userId){
         List<BookingDTO> bookingList = new ArrayList<>();
         return ResponseEntity.ok(bookingList);
