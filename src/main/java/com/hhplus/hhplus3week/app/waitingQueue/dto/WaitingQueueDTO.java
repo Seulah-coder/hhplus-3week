@@ -1,9 +1,9 @@
-package com.hhplus.hhplus3week.app.token.dto;
+package com.hhplus.hhplus3week.app.waitingQueue.dto;
 import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class TokenDTO {
+public class WaitingQueueDTO {
 
     private Long id;
     private Long userId;
