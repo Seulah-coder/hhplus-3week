@@ -1,6 +1,9 @@
 package com.hhplus.hhplus3week.app.waitingQueue.controller;
 
 import com.hhplus.hhplus3week.app.waitingQueue.dto.WaitingQueueDTO;
+import com.hhplus.hhplus3week.app.waitingQueue.dto.WaitingQueueRequestDTO;
+import com.hhplus.hhplus3week.app.waitingQueue.models.WaitingQueue;
+import com.hhplus.hhplus3week.app.waitingQueue.services.WaitingQueueService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,9 +13,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/tokens")
 public class WaitingQueueController {
 
+    private final WaitingQueueService waitingQueueService;
+
+    public WaitingQueueController(WaitingQueueService waitingQueueService) {
+        this.waitingQueueService = waitingQueueService;
+    }
+
     @PostMapping("/request")
-    public ResponseEntity<WaitingQueueDTO> requestWaitingQueue(WaitingQueueDTO waitingQueueDTO){
-        return ResponseEntity.ok(waitingQueueDTO);
+    public ResponseEntity<WaitingQueue> requestWaitingQueue(WaitingQueueRequestDTO waitingQueueRequestDTO){
+        WaitingQueue waitingQueue= waitingQueueService.saveWaitingQueue(waitingQueueRequestDTO);
+        return ResponseEntity.ok(waitingQueue);
     }
 
     @GetMapping("/{id}")

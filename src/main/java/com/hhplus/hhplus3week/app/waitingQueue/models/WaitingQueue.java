@@ -2,6 +2,7 @@ package com.hhplus.hhplus3week.app.waitingQueue.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class WaitingQueue {
 
     @Id
@@ -23,7 +25,7 @@ public class WaitingQueue {
     private Long userId;
 
     @Column(length=30)
-    private String concertScheduleId;
+    private Long concertScheduleId;
 
     @Column(length=30)
     private String token;
