@@ -21,10 +21,16 @@ public class Booking {
     private Long userId;
 
     @Column(length=30)
+    private Long concertScheduleId;
+
+    @Column(length=30)
     private Long seatId;
 
     @Column(length=30)
     private Long paymentId;
+
+    @Column(length=30)
+    private Long seatNumber;
 
     @Column(length=100)
     private LocalDateTime bookingTime;
@@ -40,9 +46,6 @@ public class Booking {
 
     @Column(length=30)
     private int price;
-
-    @Column(length=30)
-    private Long seatNumber;
 
     @Column(length=100)
     private Long tempExpireTime;
