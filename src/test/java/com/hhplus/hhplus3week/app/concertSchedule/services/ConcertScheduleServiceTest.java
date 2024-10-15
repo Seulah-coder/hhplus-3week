@@ -1,6 +1,5 @@
 package com.hhplus.hhplus3week.app.concertSchedule.services;
 
-import com.hhplus.hhplus3week.app.concert.repositories.ConcertRepository;
 import com.hhplus.hhplus3week.app.concertSchedule.models.ConcertSchedule;
 import com.hhplus.hhplus3week.app.concertSchedule.repositories.ConcertScheduleRepository;
 import com.hhplus.hhplus3week.app.seat.models.Seat;
