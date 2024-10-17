@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -14,6 +15,9 @@ public interface ConcertScheduleRepository extends JpaRepository<ConcertSchedule
 
     List<ConcertSchedule> findAllById(Long concertId);
 
-    @Query("SELECT c FROM ConcertSchedule c LEFT JOIN FETCH c.seatList WHERE c.id = :concertId")
-    ConcertSchedule findByIdWithSeats(@Param("id") Long concertId);
+    @Query("SELECT c FROM ConcertSchedule c LEFT JOIN FETCH c.seatList s WHERE c.id = :concertScheduleId AND s.seatStatus = 'Y'")
+    ConcertSchedule findByIdWithSeats(@Param("id") Long concertScheduleId);
+
+    @Query("SELECT c FROM ConcertSchedule c WHERE c.concert.id = :concertId AND c.ticketOpenDate > :currentDate")
+    List<ConcertSchedule> findAllByIdConcertIdAfterDate(Long concertId, LocalDateTime currentDate);
 }

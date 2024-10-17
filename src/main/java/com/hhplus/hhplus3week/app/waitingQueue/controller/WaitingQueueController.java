@@ -26,7 +26,7 @@ public class WaitingQueueController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<WaitingQueueDTO> getWaitingQueueById(@PathVariable("id") Long id){
-        return ResponseEntity.ok(new WaitingQueueDTO());
+    public ResponseEntity<WaitingQueue> getWaitingQueueById(@PathVariable("id") Long id){
+        return ResponseEntity.ok(waitingQueueService.getWaitingQueueById(id));
     }
 }

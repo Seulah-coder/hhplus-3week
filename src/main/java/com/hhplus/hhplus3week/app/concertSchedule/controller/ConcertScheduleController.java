@@ -1,7 +1,7 @@
 
 package com.hhplus.hhplus3week.app.concertSchedule.controller;
 
-import com.hhplus.hhplus3week.app.concertSchedule.dto.ConcertScheduleDTO;
+import com.hhplus.hhplus3week.app.concertSchedule.dto.ConcertScheduleRequestDTO;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +22,8 @@ public class ConcertScheduleController {
      * @return
      */
     @GetMapping("/{concertId}")
-    public ResponseEntity<List<ConcertScheduleDTO>> getConcertScheduleListByConcertId(@PathVariable("concertId") Long concertId){
-        List<ConcertScheduleDTO> concertScheduleList = List.of();
+    public ResponseEntity<List<ConcertScheduleRequestDTO>> getConcertScheduleListByConcertId(@PathVariable("concertId") Long concertId){
+        List<ConcertScheduleRequestDTO> concertScheduleList = List.of();
         return ResponseEntity.ok(concertScheduleList);
     }
 
@@ -32,8 +32,8 @@ public class ConcertScheduleController {
      * @return
      */
     @GetMapping("/detail/{id}")
-    public ResponseEntity<ConcertScheduleDTO> getConcertScheduleById(@PathVariable("id") Long id){
-        ConcertScheduleDTO concert = new ConcertScheduleDTO();
+    public ResponseEntity<ConcertScheduleRequestDTO> getConcertScheduleById(@PathVariable("id") Long id){
+        ConcertScheduleRequestDTO concert = new ConcertScheduleRequestDTO();
         return ResponseEntity.ok(concert);
     }
 }

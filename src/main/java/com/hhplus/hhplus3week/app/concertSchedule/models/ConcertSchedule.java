@@ -26,9 +26,13 @@ public class ConcertSchedule {
     @Column(length=100)
     private String concertPlace;
     @Column(length=100)
-    private LocalDateTime openDatetime;
+    private LocalDateTime concertOpenDate;
     @Column(length=100)
     private LocalDateTime ticketOpenDate;
+    @Column(length = 30)
+    private int totalSeatNumber;
+    @Column(length = 30)
+    private int currentBookedSeatNumber;
 
     @ManyToOne
     @JoinColumn(name = "concert_id")

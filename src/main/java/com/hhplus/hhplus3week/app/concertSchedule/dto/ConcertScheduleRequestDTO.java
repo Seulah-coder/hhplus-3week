@@ -6,10 +6,12 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class ConcertScheduleDTO {
+public class ConcertScheduleRequestDTO {
 
     private Long id;
     private Long concertId;
-    private LocalDateTime openDate;
-    private LocalDateTime ticketOpenDate;
+    private Long concertScheduleId;
+    private Long userId;
+    private String token;
+    private LocalDateTime selectedDate;
 }

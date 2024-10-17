@@ -8,5 +8,7 @@ import java.util.List;
 
 @Repository
 public interface WaitingQueueRepository extends JpaRepository<WaitingQueue, Long> {
-    List<WaitingQueue> findAllByConcertScheduleId(Long concertScheduleId);
+    List<WaitingQueue> findAllByConcertId(Long concertId);
+
+    WaitingQueue findByUserId(Long userId);
 }

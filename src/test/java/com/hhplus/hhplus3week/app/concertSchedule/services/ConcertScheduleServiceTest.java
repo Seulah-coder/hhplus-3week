@@ -1,5 +1,7 @@
 package com.hhplus.hhplus3week.app.concertSchedule.services;
 
+import com.hhplus.hhplus3week.app.concertSchedule.dto.ConcertScheduleRequestDTO;
+import com.hhplus.hhplus3week.app.concertSchedule.dto.ConcertScheduleSaveDTO;
 import com.hhplus.hhplus3week.app.concertSchedule.models.ConcertSchedule;
 import com.hhplus.hhplus3week.app.concertSchedule.repositories.ConcertScheduleRepository;
 import com.hhplus.hhplus3week.app.seat.models.Seat;
@@ -39,11 +41,18 @@ class ConcertScheduleServiceTest {
                 .concertPlace("일산 킨텍스")
                 .id(1L)
                 .ticketOpenDate(ticketDate)
-                .openDatetime(releaseDate)
+                .concertOpenDate(releaseDate)
                 .build();
 
+        ConcertScheduleSaveDTO dto = new ConcertScheduleSaveDTO();
+        dto.setConcertId(1L);
+        dto.setConcertPlace("일산 킨텍스");
+        dto.setTicketOpenDate(ticketDate);
+        dto.setConcertOpenDate(releaseDate);
+        dto.setTotalSeatNumber(50);
+
         when(concertScheduleRepository.save(concertSchedule)).thenReturn(concertSchedule);
-        ConcertSchedule concertSchedule1 = concertScheduleService.saveConcertSchedule(concertSchedule);
+        ConcertSchedule concertSchedule1 = concertScheduleService.saveConcertSchedule(dto);
 
         assertNotNull(concertSchedule1);
         assertEquals(concertSchedule1.getId(), concertSchedule.getId());
@@ -65,7 +74,7 @@ class ConcertScheduleServiceTest {
                 .concertPlace("일산 킨텍스")
                 .id(1L)
                 .ticketOpenDate(ticketDate)
-                .openDatetime(releaseDate)
+                .concertOpenDate(releaseDate)
                 .build();
 
         when(concertScheduleRepository.findById(1L)).thenReturn(Optional.ofNullable(concertSchedule));
@@ -109,13 +118,19 @@ class ConcertScheduleServiceTest {
                 .concertPlace("일산 킨텍스")
                 .id(1L)
                 .ticketOpenDate(ticketDate)
-                .openDatetime(releaseDate)
+                .concertOpenDate(releaseDate)
                 .seatList(seatList)
                 .build();
 
         when(concertScheduleRepository.findByIdWithSeats(1L)).thenReturn(concertSchedule);
 
-        ConcertSchedule concertSchedule1 = concertScheduleService.getConcertScheduleByIdWithSeats(1L);
+        ConcertScheduleRequestDTO dto = new ConcertScheduleRequestDTO();
+        dto.setConcertId(1L);
+        dto.setToken("test");
+        dto.setUserId(1L);
+        dto.setSelectedDate(LocalDateTime.of(2024, 10, 17, 0, 0, 0));
+
+        ConcertSchedule concertSchedule1 = concertScheduleService.getConcertScheduleByIdWithAvailableSeats(dto);
 
         for(int i=0; i<concertSchedule1.getSeatList().size(); i++){
             System.out.println("i = " + concertSchedule1.getSeatList().get(i).getId());

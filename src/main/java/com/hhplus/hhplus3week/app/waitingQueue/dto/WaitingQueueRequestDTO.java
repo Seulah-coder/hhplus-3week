@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class WaitingQueueRequestDTO {
 
+    private Long id;
     private Long userId;
-    private Long concertScheduleId;
+    private Long concertId;
+    private String Token;
 }

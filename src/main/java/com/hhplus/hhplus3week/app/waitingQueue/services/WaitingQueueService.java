@@ -1,5 +1,6 @@
 package com.hhplus.hhplus3week.app.waitingQueue.services;
 
+import com.hhplus.hhplus3week.app.common.JwtProvider;
 import com.hhplus.hhplus3week.app.waitingQueue.dto.WaitingQueueRequestDTO;
 import com.hhplus.hhplus3week.app.waitingQueue.models.WaitingQueue;
 import com.hhplus.hhplus3week.app.waitingQueue.repositories.WaitingQueueRepository;
@@ -15,24 +16,45 @@ public class WaitingQueueService {
 
     private final WaitingQueueRepository waitingQueueRepository;
 
+    private final JwtProvider jwtProvider;
+
     @Transactional
     public WaitingQueue saveWaitingQueue(WaitingQueueRequestDTO waitingQueueRequestDTO){
 
-        WaitingQueue newWaitingQueue = WaitingQueue.builder()
-                .concertScheduleId(waitingQueueRequestDTO.getConcertScheduleId())
-                .userId(waitingQueueRequestDTO.getUserId())
-                .build();
+        WaitingQueue waitingQueue = this.getWaitingQueueByUserId(waitingQueueRequestDTO.getUserId());
 
-        return waitingQueueRepository.save(newWaitingQueue);
+        if(waitingQueue != null){
+            return waitingQueue;
+        } else {
+            String token = this.createToken(waitingQueueRequestDTO.getUserId());
+            int waitingOrder = this.checkWaitingOrder(waitingQueueRequestDTO.getConcertId());
+
+            WaitingQueue newWaitingQueue = WaitingQueue.builder()
+                    .concertId(waitingQueueRequestDTO.getConcertId())
+                    .userId(waitingQueueRequestDTO.getUserId())
+                    .token(token)
+                    .tokenStatus("wait")
+                    .waitingIndex(waitingOrder)
+                    .build();
+
+            return waitingQueueRepository.save(newWaitingQueue);
+        }
     }
 
-    public int checkWaitingOrder(Long concertScheduleId){
-        List<WaitingQueue> checkQueue  = waitingQueueRepository.findAllByConcertScheduleId(concertScheduleId);
+    public WaitingQueue getWaitingQueueByUserId(Long userId){
+        return waitingQueueRepository.findByUserId(userId);
+    }
+
+    public WaitingQueue getWaitingQueueById(Long id){
+        return waitingQueueRepository.findById(id).orElse(null);
+    }
+
+    public int checkWaitingOrder(Long concertId){
+        List<WaitingQueue> checkQueue  = waitingQueueRepository.findAllByConcertId(concertId);
         return checkQueue.size();
     }
 
     private String createToken(Long userId){
-        String token = "";
-        return token;
+        return jwtProvider.createAccessToken(userId);
     }
 }
