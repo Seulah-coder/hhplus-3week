@@ -5,9 +5,12 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import javax.crypto.SecretKey;
 import java.util.Date;
 
+@Component
 public class JwtProvider {
 
 
@@ -20,10 +23,6 @@ public class JwtProvider {
         this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secretKey));
     }
 
-//    private SecretKey getSigningKey(@Value("${auth.jwt.secret}") String secretKey) {
-//        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-//        return Keys.hmacShaKeyFor(keyBytes);
-//    }
 
     // JWT 생성 메소드
     public String createAccessToken(Long userId) {
@@ -49,17 +48,17 @@ public class JwtProvider {
     // JWT 유효성 검사 메소드
     public boolean validateToken(String token, Long userId) {
         Long extractedUserId = getUserIdFromToken(token);
-        return (extractedUserId.equals(userId));
-//        return (extractedUserId.equals(userId) && !isTokenExpired(token));
+        return (extractedUserId.equals(userId) && !isTokenExpired(token));
     }
 
-//    private static boolean isTokenExpired(String token) {
-//        Date expiration = Jwts.parser()
-//                .setSigningKey(SECRET_KEY)
-//                .parseClaimsJws(token)
-//                .getBody()
-//                .getExpiration();
-//        return expiration.before(new Date());
-//    }
+    private boolean isTokenExpired(String token) {
+        Date expiration = Jwts.parser()
+                .verifyWith(secretKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getExpiration();
+        return expiration.before(new Date());
+    }
 
 }
