@@ -1,6 +1,8 @@
 package com.hhplus.hhplus3week.app.concert.controller;
 
+import com.hhplus.hhplus3week.app.concert.application.ConcertWaitingFacade;
 import com.hhplus.hhplus3week.app.concert.dto.ConcertDTO;
+import com.hhplus.hhplus3week.app.concert.dto.ConcertWaitingCheckDTO;
 import com.hhplus.hhplus3week.app.concert.models.Concert;
 import com.hhplus.hhplus3week.app.concert.services.ConcertService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,9 +17,11 @@ import java.util.List;
 public class ConcertController {
 
     private final ConcertService concertService;
+    private final ConcertWaitingFacade concertWaitingFacade;
 
-    public ConcertController(ConcertService concertService) {
+    public ConcertController(ConcertService concertService, ConcertWaitingFacade concertWaitingFacade) {
         this.concertService = concertService;
+        this.concertWaitingFacade = concertWaitingFacade;
     }
 
     /**
@@ -34,10 +38,10 @@ public class ConcertController {
      * 콘서트 조회
      * @return
      */
-    @GetMapping("/{concertId}")
-    public ResponseEntity<ConcertDTO> getConcertById(@PathVariable("concertId") Long concertId){
-        ConcertDTO concert = new ConcertDTO();
-        return ResponseEntity.ok(concert);
+    @GetMapping("/{concertId}/{userId}")
+    public ResponseEntity<ConcertWaitingCheckDTO> getConcertById(@PathVariable("concertId") Long concertId, @PathVariable("userId") Long userId){
+        ConcertWaitingCheckDTO concertCheck = concertWaitingFacade.checkWaitingQueueGetConcertById(concertId, userId);
+        return ResponseEntity.ok(concertCheck);
     }
 
     /**
