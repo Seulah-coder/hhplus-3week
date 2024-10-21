@@ -17,4 +17,6 @@ public class BookingRequestDTO {
     private LocalDateTime concertDate;
     private int price;
     private Long seatNumber;
+    private Long paymentId;
+    private Long concertScheduleId;
 }

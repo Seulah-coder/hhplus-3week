@@ -18,16 +18,6 @@ public class PaymentService {
     @Transactional
     public Payment savePayment(PaymentRequestDTO paymentRequestDTO) {
         Payment payment = Payment.builder()
-                .paymentTime(LocalDateTime.now())
-                .amount(paymentRequestDTO.getAmount())
-                .userId(paymentRequestDTO.getUserId())
-                .build();
-        return paymentRepository.save(payment);
-    }
-
-    @Transactional
-    public Payment updatePayment(PaymentRequestDTO paymentRequestDTO) {
-        Payment payment = Payment.builder()
                 .id(paymentRequestDTO.getId())
                 .paymentTime(LocalDateTime.now())
                 .amount(paymentRequestDTO.getAmount())

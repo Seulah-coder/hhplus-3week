@@ -5,6 +5,7 @@ import com.hhplus.hhplus3week.app.money.models.Money;
 import com.hhplus.hhplus3week.app.money.models.MoneyHistory;
 import com.hhplus.hhplus3week.app.money.repositories.MoneyHistoryRepository;
 import com.hhplus.hhplus3week.app.money.repositories.MoneyRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,15 @@ public class MoneyService {
 
     private final MoneyHistoryRepository moneyHistoryRepository;
 
+    @Transactional
     public Money chargeMoney(MoneyDTO moneyDTO) {
         Money findMoney = getMoneyByUserId(moneyDTO.getUserId());
-        Money updatedMoney = findMoney.toBuilder()
-                .currentAmount(findMoney.getCurrentAmount() + moneyDTO.getChargeAmount())
+        int amount = findMoney != null? findMoney.getCurrentAmount() + moneyDTO.getChargeAmount() : moneyDTO.getChargeAmount();
+
+        Money updateMoney = Money.builder()
+                .id(findMoney != null? findMoney.getId() : null)
+                .currentAmount(amount)
+                .userId(moneyDTO.getUserId())
                 .build();
 
         MoneyHistory moneyHistory = MoneyHistory.builder()
@@ -27,11 +33,12 @@ public class MoneyService {
                 .amountRecord(moneyDTO.getChargeAmount())
                 .userId(moneyDTO.getUserId())
                 .build();
-        moneyHistoryRepository.save(moneyHistory);
+//        moneyHistoryRepository.save(moneyHistory);
 
-        return moneyRepository.save(updatedMoney);
+        return moneyRepository.save(updateMoney);
     }
 
+    @Transactional
     public Money useMoney(MoneyDTO moneyDTO) {
         Money findMoney = getMoneyByUserId(moneyDTO.getUserId());
         Money updatedMoney = findMoney.toBuilder()

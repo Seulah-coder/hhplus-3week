@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class ConcertService {
@@ -17,6 +19,9 @@ public class ConcertService {
         return concertRepository.save(concert);
     }
 
+    public List<Concert> getAllConcertList(){
+        return concertRepository.findAll();
+    }
 
     public Concert getConcertById(Long concertId){
         return concertRepository.findById(concertId).orElseThrow(() -> new IllegalArgumentException("No concert found with id: " + concertId));

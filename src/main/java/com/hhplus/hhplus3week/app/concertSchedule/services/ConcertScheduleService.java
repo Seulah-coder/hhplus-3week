@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -45,7 +46,7 @@ public class ConcertScheduleService {
     public ConcertSchedule getConcertScheduleByIdWithAvailableSeats(ConcertScheduleRequestDTO concertScheduleRequestDTO) {
         boolean checkTokenValidation = jwtProvider.validateToken(concertScheduleRequestDTO.getToken() , concertScheduleRequestDTO.getUserId());
         if(checkTokenValidation){
-            return concertScheduleRepository.findByIdWithSeats(concertScheduleRequestDTO.getConcertScheduleId());
+            return concertScheduleRepository.findByIdWithSeats(concertScheduleRequestDTO.getId());
         } else {
             //TODO: 글로벌로 exception 처리 만들기
             throw new RuntimeException("토큰 확인 필요");
@@ -60,7 +61,7 @@ public class ConcertScheduleService {
     public List<ConcertSchedule> getConcertScheduleByConcertIdAfterDate(ConcertScheduleRequestDTO concertScheduleRequestDTO){
         boolean checkTokenValidation = jwtProvider.validateToken(concertScheduleRequestDTO.getToken() , concertScheduleRequestDTO.getUserId());
         if(checkTokenValidation){
-            return concertScheduleRepository.findAllByIdConcertIdAfterDate(concertScheduleRequestDTO.getConcertId(), concertScheduleRequestDTO.getSelectedDate());
+            return concertScheduleRepository.findAllByIdConcertIdAfterDate(concertScheduleRequestDTO.getConcertId(), LocalDateTime.now());
         } else {
             //TODO: 글로벌로 exception 처리 만들기
             throw new RuntimeException("토큰 확인 필요");

@@ -2,10 +2,12 @@ package com.hhplus.hhplus3week.app.concert.controller;
 
 import com.hhplus.hhplus3week.app.concert.application.ConcertWaitingFacade;
 import com.hhplus.hhplus3week.app.concert.dto.ConcertSaveDTO;
+import com.hhplus.hhplus3week.app.concert.dto.ConcertSearchDTO;
 import com.hhplus.hhplus3week.app.concert.dto.ConcertWaitingCheckDTO;
 import com.hhplus.hhplus3week.app.concert.models.Concert;
 import com.hhplus.hhplus3week.app.concert.services.ConcertService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.ServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +28,8 @@ public class ConcertController {
      * @return
      */
     @GetMapping("/")
-    public ResponseEntity<List<ConcertSaveDTO>> getAllConcertList(){
-        List<ConcertSaveDTO> concertList = List.of();
+    public ResponseEntity<List<Concert>> getAllConcertList(ConcertSearchDTO concertSearchDTO){
+        List<Concert> concertList = concertService.getAllConcertList();
         return ResponseEntity.ok(concertList);
     }
 

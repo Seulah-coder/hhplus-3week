@@ -2,6 +2,7 @@ package com.hhplus.hhplus3week.app.booking.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

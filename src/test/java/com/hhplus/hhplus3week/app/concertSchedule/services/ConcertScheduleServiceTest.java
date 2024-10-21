@@ -128,7 +128,6 @@ class ConcertScheduleServiceTest {
         dto.setConcertId(1L);
         dto.setToken("test");
         dto.setUserId(1L);
-        dto.setSelectedDate(LocalDateTime.of(2024, 10, 17, 0, 0, 0));
 
         ConcertSchedule concertSchedule1 = concertScheduleService.getConcertScheduleByIdWithAvailableSeats(dto);
 

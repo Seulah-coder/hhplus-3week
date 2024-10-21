@@ -76,10 +76,12 @@ class ConcertServiceTest {
 
         ConcertSchedule schedule1 = ConcertSchedule.builder()
                 .id(1L)
+                .concertPlace("일산 킨텍스")
                 .build();
 
         ConcertSchedule schedule2 = ConcertSchedule.builder()
                 .id(2L)
+                .concertPlace("잠실 주경기장")
                 .build();
 
         List<ConcertSchedule> scheduleList = new ArrayList<>();
@@ -101,6 +103,7 @@ class ConcertServiceTest {
 
         for(int i=0; i<result.getConcertSchedules().size(); i++) {
             System.out.println("i = " + result.getConcertSchedules().get(i).getId());
+            System.out.println("i = " + result.getConcertSchedules().get(i).getConcertPlace());
         }
 
         // Assert
