@@ -4,7 +4,7 @@ package com.hhplus.hhplus3week.app.user.dto;
 import lombok.Data;
 
 @Data
-public class UserDTO {
+public class UserSaveDTO {
 
     private Long id;
     private String name;

@@ -10,6 +10,4 @@ public class SeatDTO {
     private Long seatNumber;
     private int price;
     private String seatStatus;
-    private Long tempUserId;
-    private Long tempExpireTime;
 }

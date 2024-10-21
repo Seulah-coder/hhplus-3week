@@ -48,12 +48,12 @@ public class ConcertScheduleService {
             return concertScheduleRepository.findByIdWithSeats(concertScheduleRequestDTO.getConcertScheduleId());
         } else {
             //TODO: 글로벌로 exception 처리 만들기
-            throw new RuntimeException("Invalid token");
+            throw new RuntimeException("토큰 확인 필요");
         }
     }
 
     /**
-     * 콘서트 스케줄 리스트 조회
+     * 예약 가능한 콘서트 스케줄 리스트 조회
      * @param concertScheduleRequestDTO
      * @return
      */

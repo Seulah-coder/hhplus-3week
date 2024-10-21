@@ -1,6 +1,5 @@
 package com.hhplus.hhplus3week.app.waitingQueue.controller;
 
-import com.hhplus.hhplus3week.app.waitingQueue.dto.WaitingQueueDTO;
 import com.hhplus.hhplus3week.app.waitingQueue.dto.WaitingQueueRequestDTO;
 import com.hhplus.hhplus3week.app.waitingQueue.models.WaitingQueue;
 import com.hhplus.hhplus3week.app.waitingQueue.services.WaitingQueueService;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Tag(name = "토큰 api")
-@RequestMapping("/api/tokens")
+@RequestMapping("/api/waitings")
 public class WaitingQueueController {
 
     private final WaitingQueueService waitingQueueService;

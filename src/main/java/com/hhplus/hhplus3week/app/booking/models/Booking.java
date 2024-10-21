@@ -49,4 +49,7 @@ public class Booking {
 
     @Column(length=100)
     private Long tempExpireTime;
+
+    @Column(length=100)
+    private Long tempUserId;
 }

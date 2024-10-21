@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class PaymentDTO {
+public class PaymentRequestDTO {
 
     private Long id;
     private Long userId;

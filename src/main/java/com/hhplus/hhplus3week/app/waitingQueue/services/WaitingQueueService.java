@@ -27,7 +27,7 @@ public class WaitingQueueService {
             return waitingQueue;
         } else {
             String token = this.createToken(waitingQueueRequestDTO.getUserId());
-            int waitingOrder = this.checkWaitingOrder(waitingQueueRequestDTO.getConcertId());
+            int waitingOrder = this.checkWaitingOrderByConcertId(waitingQueueRequestDTO.getConcertId());
 
             WaitingQueue newWaitingQueue = WaitingQueue.builder()
                     .concertId(waitingQueueRequestDTO.getConcertId())
@@ -49,7 +49,7 @@ public class WaitingQueueService {
         return waitingQueueRepository.findById(id).orElse(null);
     }
 
-    public int checkWaitingOrder(Long concertId){
+    public int checkWaitingOrderByConcertId(Long concertId){
         List<WaitingQueue> checkQueue  = waitingQueueRepository.findAllByConcertId(concertId);
         return checkQueue.size();
     }

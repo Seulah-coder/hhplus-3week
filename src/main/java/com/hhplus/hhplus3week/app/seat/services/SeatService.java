@@ -4,6 +4,7 @@ import com.hhplus.hhplus3week.app.concert.services.ConcertService;
 import com.hhplus.hhplus3week.app.concertSchedule.models.ConcertSchedule;
 import com.hhplus.hhplus3week.app.concertSchedule.services.ConcertScheduleService;
 import com.hhplus.hhplus3week.app.seat.dto.SeatDTO;
+import com.hhplus.hhplus3week.app.seat.dto.SeatSaveDTO;
 import com.hhplus.hhplus3week.app.seat.models.Seat;
 import com.hhplus.hhplus3week.app.seat.repositories.SeatRepository;
 import jakarta.transaction.Transactional;
@@ -19,14 +20,14 @@ public class SeatService {
     private final ConcertScheduleService concertScheduleService;
 
     @Transactional
-    public Seat saveSeat(SeatDTO seatDTO){
-        ConcertSchedule concertSchedule = concertScheduleService.getConcertScheduleById(seatDTO.getConcertScheduleId());
+    public Seat saveSeat(SeatSaveDTO seatSaveDTO){
+        ConcertSchedule concertSchedule = concertScheduleService.getConcertScheduleById(seatSaveDTO.getConcertScheduleId());
 
         Seat seat = Seat.builder()
-                .seatNumber(seatDTO.getSeatNumber())
-                .price(seatDTO.getPrice())
+                .seatNumber(seatSaveDTO.getSeatNumber())
+                .price(seatSaveDTO.getPrice())
                 .concertSchedule(concertSchedule)
-                .seatStatus(seatDTO.getSeatStatus())
+                .seatStatus(seatSaveDTO.getSeatStatus())
                 .build();
 
         return seatRepository.save(seat);

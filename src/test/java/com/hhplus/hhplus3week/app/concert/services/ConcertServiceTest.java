@@ -70,7 +70,7 @@ class ConcertServiceTest {
 
     @Test
     @DisplayName("콘서트와 콘서트 스케줄 조회")
-    void getConcertWithSchedulesById_existingId_returnsConcertWithSchedules() {
+    void getConcertWithSchedulesById_existingId_returnsConcertIdWithScheduleConcert() {
         // Arrange
         Long concertId = 1L;
 
@@ -97,7 +97,7 @@ class ConcertServiceTest {
         when(concertRepository.findByIdWithSchedules(concertId)).thenReturn(expectedConcert);
 
         // Act
-        Concert result = concertService.getConcertWithSchedulesById(concertId);
+        Concert result = concertService.getConcertIdWithScheduleByConcertId(concertId);
 
         for(int i=0; i<result.getConcertSchedules().size(); i++) {
             System.out.println("i = " + result.getConcertSchedules().get(i).getId());

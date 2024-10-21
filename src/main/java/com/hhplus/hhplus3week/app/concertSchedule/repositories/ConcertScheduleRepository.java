@@ -1,6 +1,5 @@
 package com.hhplus.hhplus3week.app.concertSchedule.repositories;
 
-import com.hhplus.hhplus3week.app.concert.models.Concert;
 import com.hhplus.hhplus3week.app.concertSchedule.models.ConcertSchedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,9 +12,7 @@ import java.util.List;
 @Repository
 public interface ConcertScheduleRepository extends JpaRepository<ConcertSchedule, Long> {
 
-    List<ConcertSchedule> findAllById(Long concertId);
-
-    @Query("SELECT c FROM ConcertSchedule c LEFT JOIN FETCH c.seatList s WHERE c.id = :concertScheduleId AND s.seatStatus = 'Y'")
+    @Query("SELECT c FROM ConcertSchedule c LEFT JOIN FETCH c.seatList s WHERE c.id = :concertScheduleId AND s.seatStatus = 'available'")
     ConcertSchedule findByIdWithSeats(@Param("id") Long concertScheduleId);
 
     @Query("SELECT c FROM ConcertSchedule c WHERE c.concert.id = :concertId AND c.ticketOpenDate > :currentDate")
