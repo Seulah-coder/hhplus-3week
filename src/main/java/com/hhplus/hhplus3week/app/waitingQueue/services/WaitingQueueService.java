@@ -31,6 +31,7 @@ public class WaitingQueueService {
                 .token(token)
                 .tokenStatus(waitingQueueRequestDTO.getTokenStatus())
                 .waitingIndex(waitingOrder)
+                .waitingStatus("waiting")
                 .createTime(LocalDateTime.now())
                 .build();
 
@@ -45,13 +46,14 @@ public class WaitingQueueService {
         int waitingOrder = waitingQueue.getWaitingIndex();
         if(jwtProvider.validateToken(token, waitingQueue.getUserId())){
             WaitingQueue newWaitingQueue = WaitingQueue.builder()
-                    .id(waitingQueueRequestDTO.getId())
-                    .concertId(waitingQueueRequestDTO.getConcertId())
-                    .userId(waitingQueueRequestDTO.getUserId())
+                    .id(waitingQueue.getId())
+                    .concertId(waitingQueue.getConcertId())
+                    .userId(waitingQueue.getUserId())
                     .token(token)
                     .tokenStatus(waitingQueueRequestDTO.getTokenStatus())
                     .waitingIndex(waitingOrder)
                     .updateTime(LocalDateTime.now())
+                    .waitingStatus(waitingQueueRequestDTO.getWaitingStatus())
                     .build();
 
             return waitingQueueRepository.save(newWaitingQueue);
@@ -77,8 +79,15 @@ public class WaitingQueueService {
         return waitingQueueRepository.findAllByConcertId(concertId).size();
     }
 
+    public int deleteWaitingQueue(){
+        LocalDateTime now = LocalDateTime.now();
+        return waitingQueueRepository.deleteExpiredWaitingQueue(now);
+    }
+
 
     private String createToken(Long userId){
         return jwtProvider.createAccessToken(userId);
     }
+
+
 }

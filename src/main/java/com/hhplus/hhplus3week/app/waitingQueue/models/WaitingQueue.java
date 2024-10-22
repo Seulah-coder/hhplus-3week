@@ -34,6 +34,9 @@ public class WaitingQueue {
     private String tokenStatus;
 
     @Column(length=30)
+    private String waitingStatus;
+
+    @Column(length=30)
     private int waitingIndex;
 
     @Column(length=100)

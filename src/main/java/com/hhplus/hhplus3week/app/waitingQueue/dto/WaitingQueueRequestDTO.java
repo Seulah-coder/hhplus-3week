@@ -10,6 +10,7 @@ public class WaitingQueueRequestDTO {
     private Long concertId;
     private String Token;
     private String TokenStatus;
+    private String waitingStatus;
 
     public WaitingQueueRequestDTO(Long concertId, Long userId) {
     }
