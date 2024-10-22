@@ -1,5 +1,4 @@
 package com.hhplus.hhplus3week.app.booking.controller;
-import com.hhplus.hhplus3week.app.booking.application.BookingPaymentFacade;
 import com.hhplus.hhplus3week.app.booking.application.BookingSeatFacade;
 import com.hhplus.hhplus3week.app.booking.dto.BookingSaveDTO;
 import com.hhplus.hhplus3week.app.booking.models.Booking;
@@ -18,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 public class BookingController {
 
     private final BookingService bookingService;
-
-    private final BookingPaymentFacade bookingPaymentFacade;
 
     private final BookingSeatFacade bookingSeatFacade;
 

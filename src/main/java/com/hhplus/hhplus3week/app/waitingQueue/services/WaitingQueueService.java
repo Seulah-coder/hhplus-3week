@@ -90,4 +90,7 @@ public class WaitingQueueService {
     }
 
 
+    public void deleteWaitingQueueById(Long id) {
+        waitingQueueRepository.deleteById(id);
+    }
 }

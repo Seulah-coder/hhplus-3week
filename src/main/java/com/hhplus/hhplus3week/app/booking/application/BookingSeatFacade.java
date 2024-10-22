@@ -1,6 +1,5 @@
 package com.hhplus.hhplus3week.app.booking.application;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
 import com.hhplus.hhplus3week.app.booking.dto.BookingSaveDTO;
 import com.hhplus.hhplus3week.app.booking.models.Booking;
 import com.hhplus.hhplus3week.app.booking.models.BookingStatus;
@@ -49,7 +48,7 @@ public class BookingSeatFacade {
             bookingSaveDTO.setBookingStatus(BookingStatus.PENDING);
             booking = bookingService.createBooking(bookingSaveDTO);
 
-            Money money = moneyService.getMoneyByUserId(bookingSaveDTO.getUserId());
+            Money money = moneyService.getMoneyWithLock(bookingSaveDTO.getUserId());
             if (money.getCurrentAmount() <= bookingSaveDTO.getPrice()) {
                 throw new RuntimeException("잔고 부족");
             }
@@ -63,12 +62,18 @@ public class BookingSeatFacade {
 
             if (payment.getId() > 0) {
                 bookingService.updateBookingStatus(booking.getId(), BookingStatus.COMPLETE);
+                seatService.updateSeatStatus(bookingSaveDTO.getSeatId(), SeatStatus.RESERVED);
+                waitingQueueService.deleteWaitingQueueById(waitingQueue.getId());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return booking;
+    }
+
+    public void updateSeatStatus(Long seatId, SeatStatus seatStatus) {
+        seatService.updateSeatStatus(seatId, seatStatus);
     }
 
 }

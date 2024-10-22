@@ -46,7 +46,7 @@ public class ConcertWaitingFacade {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();  // 로깅을 사용하면 더 좋습니다.
+            e.printStackTrace();
         }
 
         return response;

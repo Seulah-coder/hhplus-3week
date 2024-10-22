@@ -1,9 +1,9 @@
 package com.hhplus.hhplus3week.app.booking.schedulers;
 
+import com.hhplus.hhplus3week.app.booking.repositories.BookingRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -15,14 +15,16 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class BookingScheduler {
 
-    private final BookingScheduler bookingScheduler;
     private final EntityManager entityManager;
     private final ScheduledExecutorService scheduler;
+    private final BookingRepository bookingRepository;
 
-    public BookingScheduler(BookingScheduler bookingScheduler, EntityManager entityManager) {
+    //TODO: facade를 여기서 가져오는게 맞는지?
+
+    public BookingScheduler(EntityManager entityManager,BookingRepository bookingRepository) {
         this.scheduler = Executors.newSingleThreadScheduledExecutor();
-        this.bookingScheduler = bookingScheduler;
         this.entityManager = entityManager;
+        this.bookingRepository = bookingRepository;
     }
 
     public void startScheduler() {
@@ -39,6 +41,7 @@ public class BookingScheduler {
     protected void removeExpiredBookings() {
         try{
             LocalDateTime now = LocalDateTime.now();
+
             String jpql = "DELETE FROM Booking b WHERE b.tempExpireTime <: now";
             int deleteCount = entityManager.createQuery(jpql)
                     .setParameter("now", now)

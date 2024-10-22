@@ -72,7 +72,7 @@ public class WaitingQueueScheduler {
                     // 3. 상위 3명의 대기 상태 업데이트
                     String updateQuery = """
                         UPDATE WaitingQueue w
-                        SET w.waitingStatus = 'available', w.updateTime = :now
+                        SET w.waitingStatus = 'pass', w.updateTime = :now
                         WHERE w.concertId = :concertId
                         AND w.id IN (
                             SELECT sub.id

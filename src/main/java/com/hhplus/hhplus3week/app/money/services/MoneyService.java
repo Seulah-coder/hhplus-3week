@@ -58,4 +58,8 @@ public class MoneyService {
     public Money getMoneyByUserId(Long userId){
         return moneyRepository.findByUserId(userId);
     }
+
+    public Money getMoneyWithLock(Long id) {
+        return moneyRepository.findByIdWithLock(id);
+    }
 }

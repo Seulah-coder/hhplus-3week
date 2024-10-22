@@ -37,4 +37,9 @@ public class PaymentService {
     public Payment getPayment(Long id) {
         return paymentRepository.findById(id).orElseThrow(() -> new RuntimeException("아이디에 해당하는 페이먼트 없음"));
     }
+
+    public Payment getPaymentWithLock(Long id) {
+        return paymentRepository.findByIdWithLock(id);
+    }
+
 }
