@@ -20,10 +20,21 @@ public class WaitingQueueController {
 
     @PostMapping("/request")
     public ResponseEntity<WaitingQueue> requestWaitingQueue(WaitingQueueRequestDTO waitingQueueRequestDTO){
-        WaitingQueue waitingQueue= waitingQueueService.saveWaitingQueue(waitingQueueRequestDTO);
+        WaitingQueue waitingQueue= waitingQueueService.createWaitingQueue(waitingQueueRequestDTO);
         return ResponseEntity.ok(waitingQueue);
     }
 
+    @PostMapping("/update")
+    public ResponseEntity<WaitingQueue> updateWaitingQueue(WaitingQueueRequestDTO waitingQueueRequestDTO){
+        WaitingQueue waitingQueue= waitingQueueService.updateWaitingQueue(waitingQueueRequestDTO);
+        return ResponseEntity.ok(waitingQueue);
+    }
+
+    /**
+     * 폴링용 API
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public ResponseEntity<WaitingQueue> getWaitingQueueById(@PathVariable("id") Long id){
         return ResponseEntity.ok(waitingQueueService.getWaitingQueueById(id));

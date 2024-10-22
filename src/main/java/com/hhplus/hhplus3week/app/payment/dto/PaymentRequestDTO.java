@@ -12,5 +12,7 @@ public class PaymentRequestDTO {
     private Long userId;
     private Long bookingId;
     private int amount;
+    private String seatPrice;
     private LocalDateTime paymentTime;
+    private String token;
 }

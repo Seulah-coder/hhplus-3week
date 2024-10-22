@@ -1,13 +1,11 @@
 package com.hhplus.hhplus3week.app.concert.controller;
 
 import com.hhplus.hhplus3week.app.concert.application.ConcertWaitingFacade;
-import com.hhplus.hhplus3week.app.concert.dto.ConcertSaveDTO;
 import com.hhplus.hhplus3week.app.concert.dto.ConcertSearchDTO;
 import com.hhplus.hhplus3week.app.concert.dto.ConcertWaitingCheckDTO;
 import com.hhplus.hhplus3week.app.concert.models.Concert;
 import com.hhplus.hhplus3week.app.concert.services.ConcertService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.ServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,12 +31,12 @@ public class ConcertController {
         return ResponseEntity.ok(concertList);
     }
 
-    /**
+    /** TODO: facade 이용하지 않음
      * 콘서트 조회
      * @return
      */
-    @GetMapping("/{concertId}/schedules/{scheduleId}")
-    public ResponseEntity<Concert> getConcertById(@PathVariable("concertId") Long concertId, @PathVariable("scheduleId") Long concertScheduleId, @RequestParam("token") String token){
+    @GetMapping("/{concertId}/schedules")
+    public ResponseEntity<Concert> getConcertById(@PathVariable("concertId") Long concertId){
         Concert concert = concertService.getConcertIdWithScheduleByConcertId(concertId);
         return ResponseEntity.ok(concert);
     }

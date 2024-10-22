@@ -28,7 +28,7 @@ public class Payment {
     private int amount;
 
     @Column(length=30)
-    private String paymentStatus;
+    private PaymentStatus paymentStatus;
 
     @Column(length=100)
     private LocalDateTime paymentTime;

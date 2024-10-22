@@ -1,7 +1,8 @@
 package com.hhplus.hhplus3week.app.booking.services;
 
-import com.hhplus.hhplus3week.app.booking.dto.BookingRequestDTO;
+import com.hhplus.hhplus3week.app.booking.dto.BookingSaveDTO;
 import com.hhplus.hhplus3week.app.booking.models.Booking;
+import com.hhplus.hhplus3week.app.booking.models.BookingStatus;
 import com.hhplus.hhplus3week.app.booking.repositories.BookingRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -26,22 +27,60 @@ public class BookingService {
 
 
     @Transactional
-    public Booking saveBooking(BookingRequestDTO bookingRequestDTO) {
+    public Booking createBooking(BookingSaveDTO bookingSaveDTO) {
         Booking booking = Booking.builder()
-                .bookingStatus(bookingRequestDTO.getBookingStatus())
-                .price(bookingRequestDTO.getPrice())
-                .concertName(bookingRequestDTO.getConcertName())
+                .bookingStatus(bookingSaveDTO.getBookingStatus())
+                .price(bookingSaveDTO.getPrice())
+                .concertName(bookingSaveDTO.getConcertName())
                 .bookingTime(LocalDateTime.now())
-                .concertDate(bookingRequestDTO.getConcertDate())
-                .seatId(bookingRequestDTO.getSeatId())
-                .paymentId(bookingRequestDTO.getPaymentId())
-                .tempUserId(bookingRequestDTO.getUserId())
-                .userId(bookingRequestDTO.getUserId())
-                .seatNumber(bookingRequestDTO.getSeatNumber())
-                .concertScheduleId(bookingRequestDTO.getConcertScheduleId())
-                .id(bookingRequestDTO.getId())
+                .concertDate(bookingSaveDTO.getConcertDate())
+                .seatId(bookingSaveDTO.getSeatId())
+                .paymentId(bookingSaveDTO.getPaymentId())
+                .tempUserId(bookingSaveDTO.getUserId())
+                .userId(bookingSaveDTO.getUserId())
+                .seatNumber(bookingSaveDTO.getSeatNumber())
+                .concertScheduleId(bookingSaveDTO.getConcertScheduleId())
+                .id(bookingSaveDTO.getId())
+                .tempUserId(bookingSaveDTO.getUserId())
+                .tempExpireTime(LocalDateTime.now().plusMinutes(5))
                 .build();
 
         return bookingRepository.save(booking);
+    }
+
+    @Transactional
+    public Booking updateBooking(BookingSaveDTO bookingSaveDTO) {
+
+        Booking booking = this.getbookingById(bookingSaveDTO.getId());
+        Booking newBookingData = Booking.builder()
+                .bookingStatus(bookingSaveDTO.getBookingStatus())
+                .price(bookingSaveDTO.getPrice())
+                .concertName(bookingSaveDTO.getConcertName())
+                .bookingTime(bookingSaveDTO.getBookingTime())
+                .concertDate(bookingSaveDTO.getConcertDate())
+                .seatId(bookingSaveDTO.getSeatId())
+                .paymentId(bookingSaveDTO.getPaymentId())
+                .tempUserId(bookingSaveDTO.getUserId())
+                .userId(bookingSaveDTO.getUserId())
+                .seatNumber(bookingSaveDTO.getSeatNumber())
+                .concertScheduleId(bookingSaveDTO.getConcertScheduleId())
+                .id(booking.getId())
+                .tempUserId(bookingSaveDTO.getTempUserId())
+                .tempExpireTime(bookingSaveDTO.getTempExpiredTime())
+                .build();
+
+        return bookingRepository.save(newBookingData);
+    }
+
+    @Transactional
+    public Booking updateBookingStatus(Long bookingId, BookingStatus status) {
+
+        Booking booking = this.getbookingById(bookingId);
+        Booking newBookingData = Booking.builder()
+                .id(booking.getId())
+                .bookingStatus(status)
+                .build();
+
+        return bookingRepository.save(newBookingData);
     }
 }

@@ -12,8 +12,8 @@ import java.util.List;
 @Repository
 public interface ConcertScheduleRepository extends JpaRepository<ConcertSchedule, Long> {
 
-    @Query("SELECT c FROM ConcertSchedule c LEFT JOIN FETCH c.seatList s WHERE c.id = :concertScheduleId AND s.seatStatus = 'available'")
-    ConcertSchedule findByIdWithSeats(@Param("id") Long concertScheduleId);
+    @Query("SELECT c FROM ConcertSchedule c LEFT JOIN FETCH c.seatList s WHERE c.id = :concertScheduleId AND s.seatStatus = 'AVAILABLE'")
+    ConcertSchedule findByIdWithAvailableSeats(@Param("id") Long concertScheduleId);
 
     @Query("SELECT c FROM ConcertSchedule c WHERE c.concert.id = :concertId AND c.ticketOpenDate > :currentDate")
     List<ConcertSchedule> findAllByIdConcertIdAfterDate(Long concertId, LocalDateTime currentDate);

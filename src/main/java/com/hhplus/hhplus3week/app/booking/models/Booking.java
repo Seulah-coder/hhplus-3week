@@ -38,7 +38,7 @@ public class Booking {
     private LocalDateTime bookingTime;
 
     @Column(length=30)
-    private String bookingStatus;
+    private BookingStatus bookingStatus;
 
     @Column(length=100)
     private String concertName;
@@ -50,7 +50,7 @@ public class Booking {
     private int price;
 
     @Column(length=100)
-    private Long tempExpireTime;
+    private LocalDateTime tempExpireTime;
 
     @Column(length=100)
     private Long tempUserId;

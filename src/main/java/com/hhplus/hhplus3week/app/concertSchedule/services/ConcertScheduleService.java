@@ -46,7 +46,7 @@ public class ConcertScheduleService {
     public ConcertSchedule getConcertScheduleByIdWithAvailableSeats(ConcertScheduleRequestDTO concertScheduleRequestDTO) {
         boolean checkTokenValidation = jwtProvider.validateToken(concertScheduleRequestDTO.getToken() , concertScheduleRequestDTO.getUserId());
         if(checkTokenValidation){
-            return concertScheduleRepository.findByIdWithSeats(concertScheduleRequestDTO.getId());
+            return concertScheduleRepository.findByIdWithAvailableSeats(concertScheduleRequestDTO.getId());
         } else {
             //TODO: 글로벌로 exception 처리 만들기
             throw new RuntimeException("토큰 확인 필요");

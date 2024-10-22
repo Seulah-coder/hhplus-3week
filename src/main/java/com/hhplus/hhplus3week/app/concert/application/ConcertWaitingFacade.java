@@ -26,16 +26,27 @@ public class ConcertWaitingFacade {
             boolean hasWaitingOrder = waitingQueueService.checkWaitingOrderByConcertId(concertId) > 0;
             WaitingQueue waitingQueue = waitingQueueService.getWaitingQueueByUserId(userId);
 
-            if (waitingQueue == null && hasWaitingOrder) {
-                WaitingQueueRequestDTO waitingQueueRequestDTO = new WaitingQueueRequestDTO(concertId, userId);
-                response.setWaitingQueue(waitingQueueService.saveWaitingQueue(waitingQueueRequestDTO));
-            } else if (waitingQueue != null && "pass".equals(waitingQueue.getTokenStatus())) {
+            // 대기열이 없을 때 콘서트 정보를 바로 반환
+            if (!hasWaitingOrder) {
                 response.setConcert(concertService.getConcertIdWithScheduleByConcertId(concertId));
-            } else if (!hasWaitingOrder) {
+                return response;
+            }
+
+            // 대기열이 있지만 유저가 대기열에 없는 경우, 새로운 대기열 생성
+            if (waitingQueue == null) {
+                WaitingQueueRequestDTO waitingQueueRequestDTO = new WaitingQueueRequestDTO(concertId, userId);
+                response.setWaitingQueue(waitingQueueService.createWaitingQueue(waitingQueueRequestDTO));
+                return response;
+            }
+
+            // 대기열이 있고 토큰이 유효한 경우
+            if (jwtProvider.validateToken(waitingQueue.getTokenStatus(), waitingQueue.getUserId())
+                    && "pass".equals(waitingQueue.getTokenStatus())) {
                 response.setConcert(concertService.getConcertIdWithScheduleByConcertId(concertId));
             }
+
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace();  // 로깅을 사용하면 더 좋습니다.
         }
 
         return response;

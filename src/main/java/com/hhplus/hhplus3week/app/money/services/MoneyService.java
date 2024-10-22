@@ -33,7 +33,7 @@ public class MoneyService {
                 .amountRecord(moneyDTO.getChargeAmount())
                 .userId(moneyDTO.getUserId())
                 .build();
-//        moneyHistoryRepository.save(moneyHistory);
+        moneyHistoryRepository.save(moneyHistory);
 
         return moneyRepository.save(updateMoney);
     }

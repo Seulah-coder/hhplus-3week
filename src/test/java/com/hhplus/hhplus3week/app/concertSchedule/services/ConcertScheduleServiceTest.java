@@ -122,7 +122,7 @@ class ConcertScheduleServiceTest {
                 .seatList(seatList)
                 .build();
 
-        when(concertScheduleRepository.findByIdWithSeats(1L)).thenReturn(concertSchedule);
+        when(concertScheduleRepository.findByIdWithAvailableSeats(1L)).thenReturn(concertSchedule);
 
         ConcertScheduleRequestDTO dto = new ConcertScheduleRequestDTO();
         dto.setConcertId(1L);
@@ -139,6 +139,6 @@ class ConcertScheduleServiceTest {
         assertEquals(concertSchedule1.getSeatList().get(0).getId(), seatOne.getId());
         assertEquals(concertSchedule1.getSeatList().get(1).getId(), seatTwo.getId());
 
-        verify(concertScheduleRepository).findByIdWithSeats(1L);
+        verify(concertScheduleRepository).findByIdWithAvailableSeats(1L);
     }
 }

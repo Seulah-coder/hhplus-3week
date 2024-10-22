@@ -1,5 +1,6 @@
 package com.hhplus.hhplus3week.app.payment.services;
 
+import com.hhplus.hhplus3week.app.common.JwtProvider;
 import com.hhplus.hhplus3week.app.payment.dto.PaymentRequestDTO;
 import com.hhplus.hhplus3week.app.payment.models.Payment;
 import com.hhplus.hhplus3week.app.payment.repositories.PaymentRepository;
@@ -15,15 +16,22 @@ public class PaymentService {
 
     private final PaymentRepository paymentRepository;
 
+    private final JwtProvider jwtProvider;
+
     @Transactional
     public Payment savePayment(PaymentRequestDTO paymentRequestDTO) {
-        Payment payment = Payment.builder()
-                .id(paymentRequestDTO.getId())
-                .paymentTime(LocalDateTime.now())
-                .amount(paymentRequestDTO.getAmount())
-                .userId(paymentRequestDTO.getUserId())
-                .build();
-        return paymentRepository.save(payment);
+
+        if(jwtProvider.validateToken(paymentRequestDTO.getToken(), paymentRequestDTO.getUserId())){
+            Payment payment = Payment.builder()
+                    .id(paymentRequestDTO.getId())
+                    .paymentTime(LocalDateTime.now())
+                    .amount(paymentRequestDTO.getAmount())
+                    .userId(paymentRequestDTO.getUserId())
+                    .build();
+            return paymentRepository.save(payment);
+        } else {
+            throw new RuntimeException("유효한 토큰이 아닙니다.");
+        }
     }
 
     public Payment getPayment(Long id) {
