@@ -6,6 +6,7 @@ import com.hhplus.hhplus3week.app.concertSchedule.dto.ConcertScheduleRequestDTO;
 import com.hhplus.hhplus3week.app.concertSchedule.dto.ConcertScheduleSaveDTO;
 import com.hhplus.hhplus3week.app.concertSchedule.models.ConcertSchedule;
 import com.hhplus.hhplus3week.app.concertSchedule.repositories.ConcertScheduleRepository;
+import com.hhplus.hhplus3week.app.seat.models.SeatStatus;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -46,7 +47,7 @@ public class ConcertScheduleService {
     public ConcertSchedule getConcertScheduleByIdWithAvailableSeats(ConcertScheduleRequestDTO concertScheduleRequestDTO) {
         boolean checkTokenValidation = jwtProvider.validateToken(concertScheduleRequestDTO.getToken() , concertScheduleRequestDTO.getUserId());
         if(checkTokenValidation){
-            return concertScheduleRepository.findByIdWithAvailableSeats(concertScheduleRequestDTO.getId());
+            return concertScheduleRepository.findByIdWithAvailableSeats(concertScheduleRequestDTO.getId(), SeatStatus.AVAILABLE);
         } else {
             //TODO: 글로벌로 exception 처리 만들기
             throw new RuntimeException("토큰 확인 필요");
