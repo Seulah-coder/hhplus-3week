@@ -1,5 +1,6 @@
 package com.hhplus.hhplus3week.app.concert.services;
 
+import com.hhplus.hhplus3week.app.concert.dto.ConcertSaveDTO;
 import com.hhplus.hhplus3week.app.concert.models.Concert;
 import com.hhplus.hhplus3week.app.concert.repositories.ConcertRepository;
 import jakarta.transaction.Transactional;
@@ -15,7 +16,11 @@ public class ConcertService {
     private final ConcertRepository concertRepository;
 
     @Transactional
-    public Concert saveConcert(Concert concert){
+    public Concert saveConcert(ConcertSaveDTO concertSaveDTO){
+        Concert concert = Concert.builder()
+                .singer(concertSaveDTO.getSinger())
+                .name(concertSaveDTO.getName())
+                .build();
         return concertRepository.save(concert);
     }
 

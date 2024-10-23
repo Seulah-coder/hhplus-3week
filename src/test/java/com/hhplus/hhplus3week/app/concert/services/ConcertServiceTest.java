@@ -1,5 +1,6 @@
 package com.hhplus.hhplus3week.app.concert.services;
 
+import com.hhplus.hhplus3week.app.concert.dto.ConcertSaveDTO;
 import com.hhplus.hhplus3week.app.concert.models.Concert;
 import com.hhplus.hhplus3week.app.concert.repositories.ConcertRepository;
 import com.hhplus.hhplus3week.app.concertSchedule.models.ConcertSchedule;
@@ -38,8 +39,13 @@ class ConcertServiceTest {
                     .singer("IU")
                     .build();
 
+        ConcertSaveDTO saveDTO = new ConcertSaveDTO();
+        saveDTO.setId(1L);
+        saveDTO.setName("testConcert");
+        saveDTO.setSinger("IU");
+
         when(concertRepository.save(concert)).thenReturn(concert);
-        Concert result = concertService.saveConcert(concert);
+        Concert result = concertService.saveConcert(saveDTO);
 
         assertNotNull(result);
         assertEquals(concert.getId(), result.getId());

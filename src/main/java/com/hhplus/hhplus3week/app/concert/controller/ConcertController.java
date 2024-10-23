@@ -1,6 +1,7 @@
 package com.hhplus.hhplus3week.app.concert.controller;
 
 import com.hhplus.hhplus3week.app.concert.application.ConcertWaitingFacade;
+import com.hhplus.hhplus3week.app.concert.dto.ConcertSaveDTO;
 import com.hhplus.hhplus3week.app.concert.dto.ConcertSearchDTO;
 import com.hhplus.hhplus3week.app.concert.dto.ConcertWaitingCheckDTO;
 import com.hhplus.hhplus3week.app.concert.models.Concert;
@@ -20,6 +21,12 @@ public class ConcertController {
 
     private final ConcertService concertService;
     private final ConcertWaitingFacade concertWaitingFacade;
+
+    @PostMapping("/")
+    public ResponseEntity<Concert> saveConcert(@RequestBody ConcertSaveDTO concertSaveDTO) {
+        Concert concert = concertService.saveConcert(concertSaveDTO);
+        return ResponseEntity.ok(concert);
+    }
 
     /**
      * 콘서트 목록 조회
