@@ -5,6 +5,7 @@ import com.hhplus.hhplus3week.app.concertSchedule.dto.ConcertScheduleSaveDTO;
 import com.hhplus.hhplus3week.app.concertSchedule.models.ConcertSchedule;
 import com.hhplus.hhplus3week.app.concertSchedule.repositories.ConcertScheduleRepository;
 import com.hhplus.hhplus3week.app.seat.models.Seat;
+import com.hhplus.hhplus3week.app.seat.models.SeatStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -98,14 +99,14 @@ class ConcertScheduleServiceTest {
         Seat seatOne = Seat.builder()
                 .seatNumber(1L)
                 .price(134000)
-                .seatStatus("reserved")
+                .seatStatus(SeatStatus.RESERVED)
                 .id(1L)
                 .build();
 
         Seat seatTwo = Seat.builder()
                 .seatNumber(2L)
                 .price(134000)
-                .seatStatus("reserved")
+                .seatStatus(SeatStatus.RESERVED)
                 .id(2L)
                 .build();
 
@@ -122,7 +123,7 @@ class ConcertScheduleServiceTest {
                 .seatList(seatList)
                 .build();
 
-        when(concertScheduleRepository.findByIdWithAvailableSeats(1L)).thenReturn(concertSchedule);
+        when(concertScheduleRepository.findByIdWithAvailableSeats(1L, SeatStatus.AVAILABLE)).thenReturn(concertSchedule);
 
         ConcertScheduleRequestDTO dto = new ConcertScheduleRequestDTO();
         dto.setConcertId(1L);
@@ -139,6 +140,6 @@ class ConcertScheduleServiceTest {
         assertEquals(concertSchedule1.getSeatList().get(0).getId(), seatOne.getId());
         assertEquals(concertSchedule1.getSeatList().get(1).getId(), seatTwo.getId());
 
-        verify(concertScheduleRepository).findByIdWithAvailableSeats(1L);
+        verify(concertScheduleRepository).findByIdWithAvailableSeats(1L, SeatStatus.AVAILABLE);
     }
 }

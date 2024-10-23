@@ -1,7 +1,9 @@
 package com.hhplus.hhplus3week.app.payment.services;
 
+import com.hhplus.hhplus3week.app.common.JwtProvider;
 import com.hhplus.hhplus3week.app.payment.dto.PaymentRequestDTO;
 import com.hhplus.hhplus3week.app.payment.models.Payment;
+import com.hhplus.hhplus3week.app.payment.models.PaymentStatus;
 import com.hhplus.hhplus3week.app.payment.repositories.PaymentRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,10 +20,14 @@ import static org.mockito.Mockito.when;
 class PaymentServiceTest {
 
     @InjectMocks
-    private PaymentService paymentService;
+    PaymentService paymentService;
 
     @Mock
-    private PaymentRepository paymentRepository;
+    PaymentRepository paymentRepository;
+
+    @Mock
+    JwtProvider jwtProvider;
+
 
     @Test
     void savePayment() {
@@ -32,7 +38,7 @@ class PaymentServiceTest {
         paymentRequestDTO.setUserId(1L);
 
         Payment payment = Payment.builder()
-                .paymentStatus("pending")
+                .paymentStatus(PaymentStatus.PENDING)
                 .amount(2000)
                 .userId(1L)
                 .build();
@@ -49,7 +55,7 @@ class PaymentServiceTest {
     void getPayment() {
 
         Payment payment = Payment.builder()
-                .paymentStatus("pending")
+                .paymentStatus(PaymentStatus.PENDING)
                 .amount(2000)
                 .id(1L)
                 .build();
