@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
 
+    //TODO: payment? money?  어느쪽에서 구현하는게 맞는지
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT p FROM Payment p WHERE p.id = :id")
     Payment findByIdWithLock(Long id);
