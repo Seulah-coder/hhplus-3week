@@ -16,4 +16,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Modifying
     @Query("DELETE FROM Booking b WHERE b.tempExpireTime <: now")
     Booking deleteTempExpireTimeBooking(LocalDateTime now);
+
+    @Query("SELECT b.seatId FROM Booking b WHERE b.bookingStatus = 'PENDING'" + "AND b.tempExpireTime <: time")
+    List<Long> selectSeatIdsExpiredBooking(LocalDateTime time);
 }

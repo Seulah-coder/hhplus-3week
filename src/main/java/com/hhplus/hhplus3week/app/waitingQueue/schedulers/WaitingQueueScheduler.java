@@ -62,11 +62,7 @@ public class WaitingQueueScheduler {
             List<Long> concertIds = waitingQueueService.findDistinctConcertIds();
 
             for (Long concertId : concertIds) {
-                long queueCount = waitingQueueService.countByConcertId(concertId);
-
-                if (queueCount < 50) {
-                    waitingQueueService.updateWaitingQueueRank(concertId, LocalDateTime.now());
-                }
+                waitingQueueService.updateWaitingQueueRank(concertId, LocalDateTime.now());
             }
         } catch (Exception e) {
             log.error("에러 발생 ", e);

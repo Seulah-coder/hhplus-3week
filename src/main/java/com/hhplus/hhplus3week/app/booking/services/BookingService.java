@@ -87,4 +87,8 @@ public class BookingService {
     public Booking deleteTempExpireTimeBooking(LocalDateTime time) {
         return bookingRepository.deleteTempExpireTimeBooking(time);
     }
+
+    public List<Long> getSeatIdsFromExpiredBooking(LocalDateTime time){
+        return bookingRepository.selectSeatIdsExpiredBooking(time);
+    }
 }
