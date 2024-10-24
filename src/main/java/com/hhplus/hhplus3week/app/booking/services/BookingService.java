@@ -83,4 +83,8 @@ public class BookingService {
 
         return bookingRepository.save(newBookingData);
     }
+
+    public Booking deleteTempExpireTimeBooking(LocalDateTime time) {
+        return bookingRepository.deleteTempExpireTimeBooking(time);
+    }
 }

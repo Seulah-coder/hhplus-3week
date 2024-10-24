@@ -1,5 +1,6 @@
 package com.hhplus.hhplus3week.app.waitingQueue.controller;
 
+import com.hhplus.hhplus3week.app.waitingQueue.dto.ConcertWaitingCheckDTO;
 import com.hhplus.hhplus3week.app.waitingQueue.dto.WaitingQueueRequestDTO;
 import com.hhplus.hhplus3week.app.waitingQueue.models.WaitingQueue;
 import com.hhplus.hhplus3week.app.waitingQueue.services.WaitingQueueService;
@@ -38,5 +39,16 @@ public class WaitingQueueController {
     @GetMapping("/{id}")
     public ResponseEntity<WaitingQueue> getWaitingQueueById(@PathVariable("id") Long id){
         return ResponseEntity.ok(waitingQueueService.getWaitingQueueById(id));
+    }
+
+    /**
+     * 콘서트에 해당하는 대기열이 있는지 확인
+     * @param userId
+     * @param concertId
+     * @return
+     */
+    @GetMapping("/{userId}/concerts/{concertId}")
+    public ResponseEntity<ConcertWaitingCheckDTO> checkWaitingQueueByConcertId(@PathVariable("userId") Long userId, @PathVariable("concertId") Long concertId){
+        return ResponseEntity.ok(waitingQueueService.checkWaitingQueueByConcertId(userId, concertId));
     }
 }

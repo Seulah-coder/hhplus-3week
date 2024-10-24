@@ -1,12 +1,8 @@
 package com.hhplus.hhplus3week.app;
 
-import com.hhplus.hhplus3week.app.concert.application.ConcertWaitingFacade;
 import com.hhplus.hhplus3week.app.concert.dto.ConcertSaveDTO;
-import com.hhplus.hhplus3week.app.concert.dto.ConcertWaitingCheckDTO;
-import com.hhplus.hhplus3week.app.concert.models.Concert;
 import com.hhplus.hhplus3week.app.concert.services.ConcertService;
 import com.hhplus.hhplus3week.app.concertSchedule.dto.ConcertScheduleSaveDTO;
-import com.hhplus.hhplus3week.app.concertSchedule.models.ConcertSchedule;
 import com.hhplus.hhplus3week.app.concertSchedule.services.ConcertScheduleService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,8 +17,6 @@ import java.time.LocalDateTime;
 @SpringBootTest
 public class IntegrationTest {
 
-    @Autowired
-    ConcertWaitingFacade concertWaitingFacade;
 
     @Autowired
     ConcertService concertService;
@@ -54,9 +48,6 @@ public class IntegrationTest {
         concertScheduleSaveDTO.setConcertOpenDate(releaseDate);
         concertScheduleService.saveConcertSchedule(concertScheduleSaveDTO);
 
-
-        ConcertWaitingCheckDTO data = concertWaitingFacade.checkWaitingQueueGetConcertById(concertId, userId);
-        System.out.println("data = " + data);
 
     }
 }

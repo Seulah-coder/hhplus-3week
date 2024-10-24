@@ -11,6 +11,7 @@ public class WaitingQueueDTO {
     private String token;
     private String tokenStatus;
     private Long waitingIndex;
+    private String waitingStatus;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
     private LocalDateTime expireTime;

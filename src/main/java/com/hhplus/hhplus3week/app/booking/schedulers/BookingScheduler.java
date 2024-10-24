@@ -1,6 +1,7 @@
 package com.hhplus.hhplus3week.app.booking.schedulers;
 
 import com.hhplus.hhplus3week.app.booking.repositories.BookingRepository;
+import com.hhplus.hhplus3week.app.booking.services.BookingService;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -15,16 +16,13 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class BookingScheduler {
 
-    private final EntityManager entityManager;
+
     private final ScheduledExecutorService scheduler;
-    private final BookingRepository bookingRepository;
+    private final BookingService bookingService;
 
-    //TODO: facade를 여기서 가져오는게 맞는지?
-
-    public BookingScheduler(EntityManager entityManager,BookingRepository bookingRepository) {
+    public BookingScheduler(BookingService bookingService) {
         this.scheduler = Executors.newSingleThreadScheduledExecutor();
-        this.entityManager = entityManager;
-        this.bookingRepository = bookingRepository;
+        this.bookingService = bookingService;
     }
 
     public void startScheduler() {
@@ -41,13 +39,7 @@ public class BookingScheduler {
     protected void removeExpiredBookings() {
         try{
             LocalDateTime now = LocalDateTime.now();
-
-            String jpql = "DELETE FROM Booking b WHERE b.tempExpireTime <: now";
-            int deleteCount = entityManager.createQuery(jpql)
-                    .setParameter("now", now)
-                    .executeUpdate();
-
-            log.info("{} 개 삭제됨", deleteCount);
+            bookingService.deleteTempExpireTimeBooking(now);
 
         }catch (Exception e){
             log.error("에러 발생 ", e);

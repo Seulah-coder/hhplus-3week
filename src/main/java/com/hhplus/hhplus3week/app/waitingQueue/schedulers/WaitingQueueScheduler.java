@@ -7,6 +7,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import com.hhplus.hhplus3week.app.waitingQueue.repositories.WaitingQueueRepository;
+import com.hhplus.hhplus3week.app.waitingQueue.services.WaitingQueueService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import jakarta.persistence.EntityManager;
@@ -18,11 +19,13 @@ public class WaitingQueueScheduler {
     private final ScheduledExecutorService scheduler;
     private final EntityManager entityManager;
     private final WaitingQueueRepository waitingQueueRepository;
+    private final WaitingQueueService waitingQueueService;
 
-    public WaitingQueueScheduler(EntityManager entityManager, WaitingQueueRepository waitingQueueRepository) {
+    public WaitingQueueScheduler(EntityManager entityManager, WaitingQueueRepository waitingQueueRepository, WaitingQueueService waitingQueueService) {
         this.scheduler = Executors.newSingleThreadScheduledExecutor();
         this.entityManager = entityManager;
         this.waitingQueueRepository = waitingQueueRepository;
+        this.waitingQueueService = waitingQueueService;
     }
 
     public void startScheduler() {
@@ -47,12 +50,7 @@ public class WaitingQueueScheduler {
     protected void removeExpiredEntries() {
         try {
             LocalDateTime now = LocalDateTime.now();
-            String jpql = "DELETE FROM WaitingQueue w WHERE w.expireTime < :now";
-            int deletedCount = entityManager.createQuery(jpql)
-                    .setParameter("now", now)
-                    .executeUpdate();
-
-            log.info("{} 개 삭제됨", deletedCount);
+            waitingQueueService.deleteWaitingQueue(now);
         } catch (Exception e) {
             log.error("에러 발생 ", e);
         }
@@ -61,34 +59,13 @@ public class WaitingQueueScheduler {
     @Transactional
     protected void updateWaitingStatus() {
         try {
-            // 1. 모든 고유한 콘서트 ID 조회
-            List<Long> concertIds = waitingQueueRepository.findDistinctConcertIds();
+            List<Long> concertIds = waitingQueueService.findDistinctConcertIds();
 
             for (Long concertId : concertIds) {
-                // 2. 각 콘서트별 대기열 수 확인
-                long queueCount = waitingQueueRepository.countByConcertId(concertId);
+                long queueCount = waitingQueueService.countByConcertId(concertId);
 
                 if (queueCount < 50) {
-                    // 3. 상위 3명의 대기 상태 업데이트
-                    String updateQuery = """
-                        UPDATE WaitingQueue w
-                        SET w.waitingStatus = 'pass', w.updateTime = :now
-                        WHERE w.concertId = :concertId
-                        AND w.id IN (
-                            SELECT sub.id
-                            FROM WaitingQueue sub
-                            WHERE sub.concertId = :concertId
-                            ORDER BY sub.waitingIndex ASC
-                            LIMIT 3
-                        )
-                    """;
-
-                    int updatedCount = entityManager.createQuery(updateQuery)
-                            .setParameter("now", LocalDateTime.now())
-                            .setParameter("concertId", concertId)
-                            .executeUpdate();
-
-                    log.info("{}개 상태 업데이트 됨", updatedCount);
+                    waitingQueueService.updateWaitingQueueRank(concertId, LocalDateTime.now());
                 }
             }
         } catch (Exception e) {

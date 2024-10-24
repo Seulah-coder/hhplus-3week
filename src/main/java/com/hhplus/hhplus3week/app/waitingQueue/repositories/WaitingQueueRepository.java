@@ -19,11 +19,15 @@ public interface WaitingQueueRepository extends JpaRepository<WaitingQueue, Long
     WaitingQueue findByUserId(Long userId);
 
     @Modifying
-    @Query("DELETE FROM WaitingQueue w WHERE w.expireTime < :now")
-    int deleteExpiredWaitingQueue(LocalDateTime now);
+    @Query("DELETE FROM WaitingQueue w WHERE w.expireTime < :time")
+    int deleteExpiredWaitingQueue(LocalDateTime time);
 
     @Query("SELECT DISTINCT w.concertId FROM WaitingQueue w")
     List<Long> findDistinctConcertIds();
 
-    long countByConcertId(Long concertId);
+    int countByConcertId(Long concertId);
+
+    @Query("UPDATE WaitingQueue w SET w.waitingStatus = 'PASS', w.updateTime = :now WHERE w.concertId = :concertId AND w.id IN " +
+            "(SELECT sub.id FROM WaitingQueue sub WHERE sub.concertId = :concertId ORDER BY sub.waitingIndex ASC LIMIT 3)")
+    void updateWaitingQueueRank(Long concertId, LocalDateTime time);
 }

@@ -22,13 +22,11 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class BookingSeatFacade {
 
-    //TODO: 이렇게 한군데에서 다양한 서비스를 불러오는게 맞는건지..?
+    private final JwtProvider jwtProvider;
 
     private final BookingService bookingService;
     private final SeatService seatService;
     private final WaitingQueueService waitingQueueService;
-    private final JwtProvider jwtProvider;
-
     private final MoneyService moneyService;
     private final PaymentService paymentService;
 
@@ -57,7 +55,6 @@ public class BookingSeatFacade {
             paymentRequestDTO.setBookingId(booking.getId());
             paymentRequestDTO.setAmount(bookingSaveDTO.getPrice());
             paymentRequestDTO.setUserId(bookingSaveDTO.getUserId());
-            paymentRequestDTO.setToken(waitingQueue.getToken());
             Payment payment = paymentService.savePayment(paymentRequestDTO);
 
             if (payment.getId() > 0) {
@@ -70,10 +67,6 @@ public class BookingSeatFacade {
         }
 
         return booking;
-    }
-
-    public void updateSeatStatus(Long seatId, SeatStatus seatStatus) {
-        seatService.updateSeatStatus(seatId, seatStatus);
     }
 
 }
