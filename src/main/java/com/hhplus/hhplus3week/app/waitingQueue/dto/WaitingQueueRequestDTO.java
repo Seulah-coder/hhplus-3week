@@ -13,6 +13,4 @@ public class WaitingQueueRequestDTO {
     private String TokenStatus;
     private WaitingStatus waitingStatus;
 
-    public WaitingQueueRequestDTO(Long concertId, Long userId) {
-    }
 }

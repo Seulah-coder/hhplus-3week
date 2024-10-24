@@ -21,7 +21,7 @@ public class WaitingQueueController {
 
     @PostMapping("/request")
     public ResponseEntity<WaitingQueue> requestWaitingQueue(WaitingQueueRequestDTO waitingQueueRequestDTO){
-        WaitingQueue waitingQueue= waitingQueueService.createWaitingQueue(waitingQueueRequestDTO);
+        WaitingQueue waitingQueue= waitingQueueService.saveWaitingQueue(waitingQueueRequestDTO);
         return ResponseEntity.ok(waitingQueue);
     }
 

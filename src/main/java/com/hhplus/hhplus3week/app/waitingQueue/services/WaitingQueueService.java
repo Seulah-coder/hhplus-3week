@@ -23,7 +23,7 @@ public class WaitingQueueService {
     private final JwtProvider jwtProvider;
 
     @Transactional
-    public WaitingQueue createWaitingQueue(WaitingQueueRequestDTO waitingQueueRequestDTO){
+    public WaitingQueue saveWaitingQueue(WaitingQueueRequestDTO waitingQueueRequestDTO){
 
         String token = this.createToken(waitingQueueRequestDTO.getUserId());
         int waitingOrder = this.checkMaxWaitingOrderByConcertId(waitingQueueRequestDTO.getConcertId());
@@ -81,8 +81,10 @@ public class WaitingQueueService {
 
             // 대기열이 있지만 유저가 대기열에 없는 경우, 새로운 대기열 생성
             if (waitingQueue == null) {
-                WaitingQueueRequestDTO waitingQueueRequestDTO = new WaitingQueueRequestDTO(concertId, userId);
-                WaitingQueue createQueue = this.createWaitingQueue(waitingQueueRequestDTO);
+                WaitingQueueRequestDTO waitingQueueRequestDTO = new WaitingQueueRequestDTO();
+                waitingQueueRequestDTO.setConcertId(concertId);
+                waitingQueueRequestDTO.setUserId(userId);
+                WaitingQueue createQueue = this.saveWaitingQueue(waitingQueueRequestDTO);
                 response.setWaitingQueteStatus(WaitingStatus.WAITING);
                 response.setToken(createQueue.getToken());
                 return response;
@@ -123,10 +125,6 @@ public class WaitingQueueService {
 
     public List<Long> findDistinctConcertIds(){
         return waitingQueueRepository.findDistinctConcertIds();
-    }
-
-    public int countByConcertId(Long concertId){
-        return waitingQueueRepository.countByConcertId(concertId);
     }
 
 
