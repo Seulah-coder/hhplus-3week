@@ -2,6 +2,7 @@ package com.hhplus.hhplus3week.app.booking.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +38,7 @@ public class Booking {
     private LocalDateTime bookingTime;
 
     @Column(length=30)
-    private String bookingStatus;
+    private BookingStatus bookingStatus;
 
     @Column(length=100)
     private String concertName;
@@ -48,5 +50,8 @@ public class Booking {
     private int price;
 
     @Column(length=100)
-    private Long tempExpireTime;
+    private LocalDateTime tempExpireTime;
+
+    @Column(length=100)
+    private Long tempUserId;
 }

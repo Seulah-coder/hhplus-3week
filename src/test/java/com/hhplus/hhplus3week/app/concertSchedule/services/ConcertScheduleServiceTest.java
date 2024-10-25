@@ -1,8 +1,11 @@
 package com.hhplus.hhplus3week.app.concertSchedule.services;
 
+import com.hhplus.hhplus3week.app.concertSchedule.dto.ConcertScheduleRequestDTO;
+import com.hhplus.hhplus3week.app.concertSchedule.dto.ConcertScheduleSaveDTO;
 import com.hhplus.hhplus3week.app.concertSchedule.models.ConcertSchedule;
 import com.hhplus.hhplus3week.app.concertSchedule.repositories.ConcertScheduleRepository;
 import com.hhplus.hhplus3week.app.seat.models.Seat;
+import com.hhplus.hhplus3week.app.seat.models.SeatStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,11 +42,18 @@ class ConcertScheduleServiceTest {
                 .concertPlace("일산 킨텍스")
                 .id(1L)
                 .ticketOpenDate(ticketDate)
-                .openDatetime(releaseDate)
+                .concertOpenDate(releaseDate)
                 .build();
 
+        ConcertScheduleSaveDTO dto = new ConcertScheduleSaveDTO();
+        dto.setConcertId(1L);
+        dto.setConcertPlace("일산 킨텍스");
+        dto.setTicketOpenDate(ticketDate);
+        dto.setConcertOpenDate(releaseDate);
+        dto.setTotalSeatNumber(50);
+
         when(concertScheduleRepository.save(concertSchedule)).thenReturn(concertSchedule);
-        ConcertSchedule concertSchedule1 = concertScheduleService.saveConcertSchedule(concertSchedule);
+        ConcertSchedule concertSchedule1 = concertScheduleService.saveConcertSchedule(dto);
 
         assertNotNull(concertSchedule1);
         assertEquals(concertSchedule1.getId(), concertSchedule.getId());
@@ -65,7 +75,7 @@ class ConcertScheduleServiceTest {
                 .concertPlace("일산 킨텍스")
                 .id(1L)
                 .ticketOpenDate(ticketDate)
-                .openDatetime(releaseDate)
+                .concertOpenDate(releaseDate)
                 .build();
 
         when(concertScheduleRepository.findById(1L)).thenReturn(Optional.ofNullable(concertSchedule));
@@ -89,14 +99,14 @@ class ConcertScheduleServiceTest {
         Seat seatOne = Seat.builder()
                 .seatNumber(1L)
                 .price(134000)
-                .seatStatus("reserved")
+                .seatStatus(SeatStatus.RESERVED)
                 .id(1L)
                 .build();
 
         Seat seatTwo = Seat.builder()
                 .seatNumber(2L)
                 .price(134000)
-                .seatStatus("reserved")
+                .seatStatus(SeatStatus.RESERVED)
                 .id(2L)
                 .build();
 
@@ -109,13 +119,18 @@ class ConcertScheduleServiceTest {
                 .concertPlace("일산 킨텍스")
                 .id(1L)
                 .ticketOpenDate(ticketDate)
-                .openDatetime(releaseDate)
+                .concertOpenDate(releaseDate)
                 .seatList(seatList)
                 .build();
 
-        when(concertScheduleRepository.findByIdWithSeats(1L)).thenReturn(concertSchedule);
+        when(concertScheduleRepository.findByIdWithAvailableSeats(1L, SeatStatus.AVAILABLE)).thenReturn(concertSchedule);
 
-        ConcertSchedule concertSchedule1 = concertScheduleService.getConcertScheduleByIdWithSeats(1L);
+        ConcertScheduleRequestDTO dto = new ConcertScheduleRequestDTO();
+        dto.setConcertId(1L);
+        dto.setToken("test");
+        dto.setUserId(1L);
+
+        ConcertSchedule concertSchedule1 = concertScheduleService.getConcertScheduleByIdWithAvailableSeats(dto);
 
         for(int i=0; i<concertSchedule1.getSeatList().size(); i++){
             System.out.println("i = " + concertSchedule1.getSeatList().get(i).getId());
@@ -125,6 +140,6 @@ class ConcertScheduleServiceTest {
         assertEquals(concertSchedule1.getSeatList().get(0).getId(), seatOne.getId());
         assertEquals(concertSchedule1.getSeatList().get(1).getId(), seatTwo.getId());
 
-        verify(concertScheduleRepository).findByIdWithSeats(1L);
+        verify(concertScheduleRepository).findByIdWithAvailableSeats(1L, SeatStatus.AVAILABLE);
     }
 }

@@ -27,7 +27,7 @@ public class Seat {
     private int price;
 
     @Column(length=30)
-    private String seatStatus;
+    private SeatStatus seatStatus;
 
     @ManyToOne
     @JoinColumn(name = "concert_schedule_id")

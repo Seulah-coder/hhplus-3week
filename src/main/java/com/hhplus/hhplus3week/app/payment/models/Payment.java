@@ -3,6 +3,7 @@ package com.hhplus.hhplus3week.app.payment.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Payment {
 
     @Id
@@ -26,7 +28,7 @@ public class Payment {
     private int amount;
 
     @Column(length=30)
-    private String paymentStatus;
+    private PaymentStatus paymentStatus;
 
     @Column(length=100)
     private LocalDateTime paymentTime;

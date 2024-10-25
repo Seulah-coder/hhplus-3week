@@ -1,39 +1,30 @@
 
 package com.hhplus.hhplus3week.app.seat.controller;
 
-import com.hhplus.hhplus3week.app.seat.dto.SeatDTO;
-
+import com.hhplus.hhplus3week.app.seat.dto.SeatSaveDTO;
+import com.hhplus.hhplus3week.app.seat.models.Seat;
+import com.hhplus.hhplus3week.app.seat.services.SeatService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/seats")
 @Tag(name = "좌석 api")
+@AllArgsConstructor
 public class SeatController {
 
-    /**
-     * 콘서트 스케줄 아이디에 따른 예약 가능한 좌석 수를 조회한다.
-     * @return
-     */
-    @GetMapping("/{concertScheduleId}")
-    public ResponseEntity<List<SeatDTO>> getSeatListByScheduleId(@PathVariable("concertScheduleId") Long concertScheduleId){
-        List<SeatDTO> seatList = List.of();
-        return ResponseEntity.ok(seatList);
+    private final SeatService seatService;
+
+    @PostMapping("/")
+    public void saveSeat(@RequestBody SeatSaveDTO seatSaveDTO) {
+        seatService.createInitSeat(seatSaveDTO);
     }
 
-    /**
-     * 아이디에 따른 좌석 상세 정보를 조회한다.
-     * @return
-     */
     @GetMapping("/detail/{id}")
-    public ResponseEntity<SeatDTO> getSeatById(@PathVariable("id") Long id){
-        SeatDTO seat = new SeatDTO();
+    public ResponseEntity<Seat> getSeatById(@PathVariable("id") Long id){
+        Seat seat = seatService.getSeatByIdWithLock(id);
         return ResponseEntity.ok(seat);
     }
 }

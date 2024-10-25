@@ -25,7 +25,7 @@ public class WaitingQueue {
     private Long userId;
 
     @Column(length=30)
-    private Long concertScheduleId;
+    private Long concertId;
 
     @Column(length=30)
     private String token;
@@ -34,7 +34,10 @@ public class WaitingQueue {
     private String tokenStatus;
 
     @Column(length=30)
-    private Long waitingIndex;
+    private WaitingStatus waitingStatus;
+
+    @Column(length=30)
+    private int waitingIndex;
 
     @Column(length=100)
     private String uuid;
@@ -42,6 +45,7 @@ public class WaitingQueue {
     @Column(length=100)
     private LocalDateTime createTime;
 
+    //TODO: 가능한지 조회할 때 마다 update 해줌
     @Column(length=100)
     private LocalDateTime updateTime;
 

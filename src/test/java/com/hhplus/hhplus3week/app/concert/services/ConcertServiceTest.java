@@ -1,5 +1,6 @@
 package com.hhplus.hhplus3week.app.concert.services;
 
+import com.hhplus.hhplus3week.app.concert.dto.ConcertSaveDTO;
 import com.hhplus.hhplus3week.app.concert.models.Concert;
 import com.hhplus.hhplus3week.app.concert.repositories.ConcertRepository;
 import com.hhplus.hhplus3week.app.concertSchedule.models.ConcertSchedule;
@@ -38,8 +39,13 @@ class ConcertServiceTest {
                     .singer("IU")
                     .build();
 
+        ConcertSaveDTO saveDTO = new ConcertSaveDTO();
+        saveDTO.setId(1L);
+        saveDTO.setName("testConcert");
+        saveDTO.setSinger("IU");
+
         when(concertRepository.save(concert)).thenReturn(concert);
-        Concert result = concertService.saveConcert(concert);
+        Concert result = concertService.saveConcert(saveDTO);
 
         assertNotNull(result);
         assertEquals(concert.getId(), result.getId());
@@ -70,16 +76,18 @@ class ConcertServiceTest {
 
     @Test
     @DisplayName("콘서트와 콘서트 스케줄 조회")
-    void getConcertWithSchedulesById_existingId_returnsConcertWithSchedules() {
+    void getConcertWithSchedulesById_existingId_returnsConcertIdWithScheduleConcert() {
         // Arrange
         Long concertId = 1L;
 
         ConcertSchedule schedule1 = ConcertSchedule.builder()
                 .id(1L)
+                .concertPlace("일산 킨텍스")
                 .build();
 
         ConcertSchedule schedule2 = ConcertSchedule.builder()
                 .id(2L)
+                .concertPlace("잠실 주경기장")
                 .build();
 
         List<ConcertSchedule> scheduleList = new ArrayList<>();
@@ -97,10 +105,11 @@ class ConcertServiceTest {
         when(concertRepository.findByIdWithSchedules(concertId)).thenReturn(expectedConcert);
 
         // Act
-        Concert result = concertService.getConcertWithSchedulesById(concertId);
+        Concert result = concertService.getConcertIdWithScheduleByConcertId(concertId);
 
         for(int i=0; i<result.getConcertSchedules().size(); i++) {
             System.out.println("i = " + result.getConcertSchedules().get(i).getId());
+            System.out.println("i = " + result.getConcertSchedules().get(i).getConcertPlace());
         }
 
         // Assert

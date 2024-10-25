@@ -8,5 +8,7 @@ public class MoneyDTO {
 
     private Long id;
     private Long userId;
-    private int currentAmount;
+    private int useAmount;
+    private int chargeAmount;
+    private String type;
 }
